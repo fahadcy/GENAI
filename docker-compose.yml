@@ -1,0 +1,77 @@
+# Self-contained local stack: Postgres, the web app, and a publish worker.
+#
+#   docker compose up --build -d
+#   docker compose run --rm setup     # push the schema and seed the demo workspace
+#   open http://localhost:3000
+#
+# `setup` is a one-shot job rather than a long-running service, so it does not
+# restart in a loop after it finishes.
+
+x-app-env: &app-env
+  DATABASE_URL: postgres://aurea:aurea@db:5432/aurea
+  AUTH_SECRET: ${AUTH_SECRET:-local-development-secret-change-me-please}
+  AI_PROVIDER: ${AI_PROVIDER:-openai}
+  OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+  AI_MODEL_FAST: ${AI_MODEL_FAST:-gpt-4o-mini}
+  AI_MODEL_SMART: ${AI_MODEL_SMART:-gpt-4o}
+  APP_URL: ${APP_URL:-http://localhost:3000}
+
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: aurea
+      POSTGRES_PASSWORD: aurea
+      POSTGRES_DB: aurea
+    ports:
+      - '5432:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U aurea -d aurea']
+      interval: 5s
+      timeout: 3s
+      retries: 12
+
+  app:
+    build:
+      context: .
+      target: runner
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      <<: *app-env
+      NODE_ENV: production
+    ports:
+      - '3000:3000'
+    restart: unless-stopped
+
+  # Schema push + demo seed. Run once with `docker compose run --rm setup`.
+  setup:
+    build:
+      context: .
+      target: tools
+    depends_on:
+      db:
+        condition: service_healthy
+    environment: *app-env
+    command: ['npm', 'run', 'setup']
+    profiles: ['setup']
+
+  # Publishes due items and refreshes copilot findings. Separate from the web
+  # process so scheduled delivery never competes with request handling.
+  worker:
+    build:
+      context: .
+      target: tools
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      <<: *app-env
+      WORKER_INTERVAL_MS: '60000'
+    restart: unless-stopped
+
+volumes:
+  pgdata:

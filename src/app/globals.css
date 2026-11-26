@@ -1,0 +1,300 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Aurea tokens.
+ * Light is the base; dark overrides only what changes. Every colour used in the
+ * product resolves through one of these, so re-skinning for a white-label
+ * deployment is a single block of overrides.
+ */
+:root {
+  --bg: 250 250 251;
+  --bg-subtle: 244 244 246;
+  --bg-inset: 238 238 241;
+  --surface: 255 255 255;
+  --surface-raised: 255 255 255;
+  --surface-hover: 246 246 248;
+
+  --line: 226 226 232;
+  --line-strong: 205 205 214;
+
+  --ink: 20 21 28;
+  --ink-muted: 96 99 112;
+  --ink-faint: 141 145 160;
+  --ink-invert: 255 255 255;
+
+  --brand-50: 243 241 254;
+  --brand-100: 231 227 253;
+  --brand-200: 205 197 250;
+  --brand-400: 138 122 244;
+  --brand-500: 111 92 240;
+  --brand-600: 91 75 224;
+  --brand-700: 74 60 186;
+
+  --gold-100: 253 244 220;
+  --gold-400: 232 179 65;
+  --gold-600: 176 128 26;
+
+  /*
+   * Solid button fill. Separate from --brand-600 because a fill carrying text
+   * has a contrast obligation that a border or a tint does not: --brand-600 is
+   * tuned to read well *against* the surface, this is tuned so white text on it
+   * clears WCAG AA (4.5:1) in both themes.
+   */
+  --fill-brand: 91 75 224;
+  --fill-on-brand: 255 255 255;
+
+  --ok-bg: 224 247 234;
+  --ok-fg: 12 122 66;
+  --warn-bg: 254 243 214;
+  --warn-fg: 148 96 8;
+  --danger-bg: 254 231 233;
+  --danger-fg: 186 34 52;
+  --info-bg: 226 240 254;
+  --info-fg: 25 100 186;
+
+  /*
+   * Categorical chart slots. Validated as a set against the actual chart
+   * surface: OKLCH lightness band, chroma floor, protan/deutan separation and
+   * normal-vision ΔE all pass on adjacent pairs in both themes. Slot order is
+   * the colour-vision safety mechanism, not a cosmetic choice — reordering or
+   * substituting a single value invalidates the set.
+   *
+   * Slots 3, 4 and 5 fall below 3:1 against the light surface, so any chart
+   * using them must carry direct labels or a table view rather than relying on
+   * colour alone. Past three simultaneous series, fold to "Other" or facet.
+   */
+  --series-1: 42 120 214; /* blue */
+  --series-2: 235 104 52; /* orange */
+  --series-3: 27 175 122; /* aqua */
+  --series-4: 237 161 0; /* yellow */
+  --series-5: 232 123 164; /* magenta */
+  --series-6: 0 131 0; /* green */
+
+  --shadow-card: 0 1px 2px rgb(16 18 28 / 0.04), 0 1px 3px rgb(16 18 28 / 0.06);
+  --shadow-pop: 0 8px 24px -6px rgb(16 18 28 / 0.14), 0 2px 6px rgb(16 18 28 / 0.06);
+
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  --font-mono: ui-monospace, 'SFMono-Regular', 'JetBrains Mono', Menlo, monospace;
+
+  color-scheme: light;
+}
+
+[data-theme='dark'] {
+  --bg: 12 13 18;
+  --bg-subtle: 17 18 25;
+  --bg-inset: 22 24 32;
+  --surface: 21 23 31;
+  --surface-raised: 27 29 39;
+  --surface-hover: 32 35 46;
+
+  --line: 40 43 55;
+  --line-strong: 58 62 78;
+
+  --ink: 236 238 244;
+  --ink-muted: 158 163 180;
+  --ink-faint: 116 121 138;
+  --ink-invert: 12 13 18;
+
+  --brand-50: 30 27 60;
+  --brand-100: 42 37 82;
+  --brand-200: 64 55 128;
+  --brand-400: 152 137 250;
+  --brand-500: 133 116 248;
+  --brand-600: 124 106 245;
+  --brand-700: 152 137 250;
+
+  --gold-100: 60 46 16;
+  --gold-400: 238 191 92;
+  --gold-600: 238 191 92;
+
+  /* Darker than --brand-600 so white text on it still clears 4.5:1. */
+  --fill-brand: 112 94 238;
+  --fill-on-brand: 255 255 255;
+
+  --ok-bg: 12 48 32;
+  --ok-fg: 74 208 140;
+  --warn-bg: 58 42 8;
+  --warn-fg: 240 186 70;
+  --danger-bg: 62 20 26;
+  --danger-fg: 250 130 145;
+  --info-bg: 16 40 68;
+  --info-fg: 120 176 250;
+
+  /* Same six hues, re-stepped for the dark surface. All clear 3:1 here. */
+  --series-1: 57 135 229;
+  --series-2: 217 89 38;
+  --series-3: 25 158 112;
+  --series-4: 201 133 0;
+  --series-5: 213 81 129;
+  --series-6: 0 131 0;
+
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.3), 0 1px 3px rgb(0 0 0 / 0.24);
+  --shadow-pop: 0 10px 30px -8px rgb(0 0 0 / 0.6), 0 2px 8px rgb(0 0 0 / 0.4);
+
+  color-scheme: dark;
+}
+
+@layer base {
+  * {
+    border-color: rgb(var(--line));
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: rgb(var(--bg));
+    color: rgb(var(--ink));
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    /*
+     * This app renders a lot of strings it did not author — contact emails,
+     * company names, connector errors, audit summaries. A single long token
+     * with nowhere to break will widen its container past the viewport and
+     * scroll the whole page sideways on a phone. Breaking mid-token is far less
+     * bad than that.
+     */
+    overflow-wrap: break-word;
+  }
+
+  ::selection {
+    background: rgb(var(--brand-200));
+    color: rgb(var(--ink));
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(var(--brand-500));
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Numbers in tables and KPIs must line up. */
+  .tnum {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /*
+   * A grid whose column template only kicks in at a breakpoint — the very
+   * common `grid gap-6 xl:grid-cols-[1fr_400px]` — has `grid-template-columns:
+   * none` below that breakpoint. Items then land in an *implicit* column sized
+   * by `grid-auto-columns`, which defaults to `auto` and therefore to
+   * max-content. The result is a column wider than the viewport and a page that
+   * scrolls sideways on a phone.
+   *
+   * Constraining the implicit column to `minmax(0, 1fr)` gives every such grid
+   * the single full-width column its author meant. Written with `:where()` so it
+   * carries zero specificity: any explicit `grid-cols-*` or `auto-cols-*`
+   * utility still wins.
+   */
+  :where(.grid) {
+    grid-auto-columns: minmax(0, 1fr);
+  }
+
+  input,
+  textarea,
+  select {
+    font: inherit;
+    color: inherit;
+  }
+
+  ::-webkit-scrollbar {
+    width: 11px;
+    height: 11px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgb(var(--line-strong));
+    border-radius: 6px;
+    border: 3px solid rgb(var(--bg));
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(var(--ink-faint));
+  }
+}
+
+@layer components {
+  .card {
+    @apply rounded-card border border-line bg-surface shadow-card;
+  }
+
+  .panel {
+    @apply rounded-panel border border-line bg-surface;
+  }
+
+  .label {
+    @apply text-2xs font-semibold uppercase tracking-wider text-ink-faint;
+  }
+
+  .field {
+    @apply w-full rounded-lg border border-line bg-bg px-3 py-2 text-sm text-ink placeholder:text-ink-faint
+           transition-colors focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20;
+  }
+
+  .skeleton {
+    @apply relative overflow-hidden rounded bg-bg-inset;
+  }
+  .skeleton::after {
+    content: '';
+    @apply absolute inset-0 -translate-x-full animate-shimmer;
+    background-image: linear-gradient(90deg, transparent, rgb(var(--surface) / 0.6), transparent);
+  }
+
+  /* Thin horizontal rule used between dense list rows. */
+  .divide-row > * + * {
+    @apply border-t border-line;
+  }
+
+  /*
+   * Hue-tinted surfaces (channel chips, avatars). The hue comes in per element
+   * as --h; lightness and saturation come from the theme, so one set of hues
+   * reads correctly in both light and dark rather than staying stuck pale.
+   */
+  :root {
+    --tint-s: 58%;
+    --tint-bg-l: 95%;
+    --tint-ring-l: 85%;
+    --tint-fg-s: 48%;
+    --tint-fg-l: 31%;
+  }
+
+  [data-theme='dark'] {
+    --tint-s: 42%;
+    --tint-bg-l: 17%;
+    --tint-ring-l: 29%;
+    --tint-fg-s: 68%;
+    --tint-fg-l: 76%;
+  }
+
+  .tint {
+    background: hsl(var(--h) var(--tint-s) var(--tint-bg-l));
+    color: hsl(var(--h) var(--tint-fg-s) var(--tint-fg-l));
+    box-shadow: inset 0 0 0 1px hsl(var(--h) var(--tint-s) var(--tint-ring-l));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: #fff;
+    color: #000;
+  }
+}
