@@ -8,7 +8,7 @@ import type { Workspace } from '@/lib/db/schema'
  * module (Stripe price IDs, proration, invoices), this file is the thing to
  * move — the shapes below are deliberately free of UI concerns.
  *
- * Positioning: Aurea replaces a stack. A team running content generation,
+ * Positioning: GenAI replaces a stack. A team running content generation,
  * scheduling, audience sync and a governance layer separately pays four
  * subscriptions and still has no single audit trail. That comparison is the
  * argument for the price, so the stack each tier absorbs is part of the tier.

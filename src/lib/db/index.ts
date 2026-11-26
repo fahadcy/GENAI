@@ -9,19 +9,19 @@ import * as schema from './schema'
  * pool per instance rather than opening a connection per request.
  */
 const globalForDb = globalThis as unknown as {
-  __aureaSql?: ReturnType<typeof postgres>
+  __genaiSql?: ReturnType<typeof postgres>
 }
 
 function client() {
-  if (!globalForDb.__aureaSql) {
-    globalForDb.__aureaSql = postgres(env().DATABASE_URL, {
+  if (!globalForDb.__genaiSql) {
+    globalForDb.__genaiSql = postgres(env().DATABASE_URL, {
       max: process.env.VERCEL ? 1 : 10,
       idle_timeout: 20,
       connect_timeout: 15,
       prepare: false, // pgbouncer / Supabase transaction pooling compatibility
     })
   }
-  return globalForDb.__aureaSql
+  return globalForDb.__genaiSql
 }
 
 export const db = drizzle(client(), { schema })

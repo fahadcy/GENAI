@@ -132,7 +132,7 @@ function weightedCountry(): [string, string] {
 /* ------------------------------------------------------------------ main */
 
 async function main() {
-  console.log('\n▸ Seeding Aurea\n')
+  console.log('\n▸ Seeding GenAI\n')
 
   log('Clearing existing data…')
   await db.execute(sql`
@@ -177,7 +177,7 @@ async function main() {
 
   /* ---------------------------------------------------------------- users */
 
-  const password = await hashPassword('Aurea2026!')
+  const password = await hashPassword('GenAI2026!')
   const people = [
     { name: 'Fahad Ali', email: 'fahad.ali@currieyoung.com', role: 'owner' as const, jobTitle: 'Head of Marketing', hue: 258 },
     { name: 'Priya Raman', email: 'priya@currieyoung.com', role: 'strategist' as const, jobTitle: 'Growth Marketing Lead', hue: 172 },
@@ -1191,14 +1191,14 @@ async function main() {
   }[] = [
     {
       key: 'platform-uk',
-      name: 'Aurea platform — UK enquiries',
+      name: 'GenAI platform — UK enquiries',
       brief:
         'We sell marketing automation software to in-house marketing teams. I want demo bookings from heads of marketing at UK companies.',
       objective: 'leads',
       daily: 45,
       status: 'live',
       geo: [{ criterionId: '2826', name: 'United Kingdom' }],
-      finalUrl: 'https://aurea.example.com/demo',
+      finalUrl: 'https://genai.example.com/demo',
       conversionAction: `customers/4820917365/conversionActions/8814920`,
       ageDays: 26,
     },
@@ -1214,7 +1214,7 @@ async function main() {
         { criterionId: '2826', name: 'United Kingdom' },
         { criterionId: '2372', name: 'Ireland' },
       ],
-      finalUrl: 'https://aurea.example.com/pricing',
+      finalUrl: 'https://genai.example.com/pricing',
       conversionAction: `customers/4820917365/conversionActions/8814931`,
       ageDays: 2,
     },
@@ -1226,7 +1226,7 @@ async function main() {
       daily: 25,
       status: 'paused',
       geo: [{ criterionId: '1006886', name: 'London, England' }],
-      finalUrl: 'https://aurea.example.com/agencies',
+      finalUrl: 'https://genai.example.com/agencies',
       conversionAction: `customers/4820917365/conversionActions/8814920`,
       ageDays: 9,
     },
@@ -1238,7 +1238,7 @@ async function main() {
       daily: 12,
       status: 'approved',
       geo: [{ criterionId: '2826', name: 'United Kingdom' }],
-      finalUrl: 'https://aurea.example.com/report',
+      finalUrl: 'https://genai.example.com/report',
       conversionAction: null,
       ageDays: 1,
     },
@@ -1250,7 +1250,7 @@ async function main() {
       daily: 18,
       status: 'draft',
       geo: [{ criterionId: '2826', name: 'United Kingdom' }],
-      finalUrl: 'https://aurea.example.com/starter',
+      finalUrl: 'https://genai.example.com/starter',
       conversionAction: null,
       ageDays: 0.3,
     },
@@ -1506,7 +1506,7 @@ async function main() {
     const now = new Date()
     const start = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1)).toISOString().slice(0, 10)
     const end = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 1, 0)).toISOString().slice(0, 10)
-    await budget.syncFromAurea(ws.id)
+    await budget.syncFromGenAI(ws.id)
     const plan = await budget.createPlan({
       workspaceId: ws.id,
       actorId: strategist.id,
@@ -1573,7 +1573,7 @@ async function main() {
   console.log('  Sign in at http://localhost:3000/login')
   console.log('  ─────────────────────────────────────────────')
   for (const p of people) {
-    console.log(`  ${p.email.padEnd(34)} ${p.role.padEnd(11)} Aurea2026!`)
+    console.log(`  ${p.email.padEnd(34)} ${p.role.padEnd(11)} GenAI2026!`)
   }
   console.log('')
 }

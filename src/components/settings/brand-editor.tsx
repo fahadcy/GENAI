@@ -465,7 +465,7 @@ function TestPanel({
                   ? 'This would reach a reviewer without a regeneration.'
                   : detail.compliance.findings.some((f) => f.severity === 'high')
                     ? 'A high-severity finding stops submission outright, whatever the score.'
-                    : 'Aurea would regenerate this rather than send it to a reviewer.'}
+                    : 'GenAI would regenerate this rather than send it to a reviewer.'}
               </p>
             </div>
           </div>
@@ -716,7 +716,7 @@ const SAMPLES = [
 
 We measured it across eleven B2B teams last quarter: median time from finished draft to approved was 6.4 days, and 40% of that was work sitting in an inbox nobody was watching.
 
-Aurea puts the review step inside the same tool that made the draft. Every asset arrives already scored against your brand and legal rules, so a reviewer opens something that has already cleared the obvious problems.
+GenAI puts the review step inside the same tool that made the draft. Every asset arrives already scored against your brand and legal rules, so a reviewer opens something that has already cleared the obvious problems.
 
 Worth twenty minutes? Pick a time that suits you.`,
   },
@@ -725,7 +725,7 @@ Worth twenty minutes? Pick a time that suits you.`,
     headline: 'The best-in-class platform that will skyrocket your ROI',
     body: `In today's fast-paced world, marketing teams need a revolutionary solution!
 
-Our game-changing platform delivers guaranteed results — teams leverage Aurea to unlock an ROI of 340% in the first quarter alone!!! It's clinically proven to reduce approval times and it beats HubSpot on every measure.
+Our game-changing platform delivers guaranteed results — teams leverage GenAI to unlock an ROI of 340% in the first quarter alone!!! It's clinically proven to reduce approval times and it beats HubSpot on every measure.
 
 We added you to this list because we think you'll love it. Don't miss out — this offer ends today!`,
   },

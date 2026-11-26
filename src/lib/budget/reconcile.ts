@@ -53,7 +53,7 @@ export type ReconcileInput = {
   /** Already classified: platform = channel key; accountRef for Google. */
   txs: (CardTx & { accountRef?: string | null; ignored?: boolean })[]
   platformDays: PlatformDay[]
-  /** Platforms whose spend Aurea can see. Charges for others are unverifiable. */
+  /** Platforms whose spend GenAI can see. Charges for others are unverifiable. */
   connectedPlatforms: string[]
   billing?: Partial<Record<string, Partial<BillingProfile>>>
   /** Google Ads customer ids the workspace owns, digits only. */
@@ -175,7 +175,7 @@ export function reconcile(input: ReconcileInput): ReconciliationReport {
       txIds: [t.id],
       title: `${money(t.amountPence)} to "${t.descriptor}" — not recognised`,
       detail: 'This charge is on a card connected to the marketing budget, but nothing identifies what it was for.',
-      suggestion: 'Assign it to a budget line, or mark the merchant as not marketing. Aurea remembers the choice for future charges.',
+      suggestion: 'Assign it to a budget line, or mark the merchant as not marketing. GenAI remembers the choice for future charges.',
     })
   }
   const unbudgeted = new Map<string, CardTx[]>()
@@ -217,7 +217,7 @@ export function reconcile(input: ReconcileInput): ReconciliationReport {
         amountPence: total,
         txIds: txs.map((t) => t.id),
         title: `${money(total)} charged by Google Ads account ${formatCustomerId(acct)}, which is not one of yours`,
-        detail: 'Google prints the paying account’s customer id on every charge. This one is not connected to Aurea — a card shared with another brand or client, or an account nobody remembers opening.',
+        detail: 'Google prints the paying account’s customer id on every charge. This one is not connected to GenAI — a card shared with another brand or client, or an account nobody remembers opening.',
         suggestion: 'Connect the account in Google Ads settings if it is yours, or remove this card from it in Google Ads → Billing.',
       })
     }
@@ -251,7 +251,7 @@ export function reconcile(input: ReconcileInput): ReconciliationReport {
           amountPence: charged,
           txIds: charges.map((t) => t.id),
           title: `${money(charged)} charged by ${label}, with nothing to check it against`,
-          detail: `${label} spend is not connected to Aurea, so these charges cannot be matched to what was delivered.`,
+          detail: `${label} spend is not connected to GenAI, so these charges cannot be matched to what was delivered.`,
           suggestion: `Connect ${label} so spend can be compared with charges, or record its spend manually.`,
         })
       }
@@ -392,7 +392,7 @@ export function reconcile(input: ReconcileInput): ReconciliationReport {
       amountPence: -t.amountPence,
       txIds: [t.id],
       title: `${money(-t.amountPence)} refunded by "${t.descriptor}"`,
-      detail: 'Money came back to the card from a merchant Aurea cannot place.',
+      detail: 'Money came back to the card from a merchant GenAI cannot place.',
       suggestion: 'Assign it to the line it belongs to so that line’s spend is stated net.',
     })
   }

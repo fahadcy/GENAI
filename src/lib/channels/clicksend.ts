@@ -132,7 +132,7 @@ export function clickSendPayload(args: {
 }) {
   return {
     messages: args.recipients.map((r) => ({
-      source: 'aurea',
+      source: 'genai',
       body: args.body,
       to: r.phone,
       ...(args.from ? { from: args.from } : {}),

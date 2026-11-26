@@ -219,7 +219,7 @@ export function CampaignComposer({
     <Card className="overflow-hidden">
       <CardHeader
         title="Plan a new campaign"
-        description="State the objective. Aurea sequences the phases, tasks, owners and dependencies, and you read the whole plan before anything is created."
+        description="State the objective. GenAI sequences the phases, tasks, owners and dependencies, and you read the whole plan before anything is created."
         icon={<Sparkles className="h-4 w-4 text-brand-600" />}
         actions={draft?.simulated ? <Badge tone="neutral">Simulated model</Badge> : undefined}
       />
@@ -376,7 +376,7 @@ export function CampaignComposer({
             <Sparkles className="mt-0.5 h-4 w-4 shrink-0 text-brand-600" />
             <div className="min-w-0 flex-1">
               <p className="label">
-                {draft.fromTemplate ? 'Rehydrated from a template' : 'The plan Aurea proposes'}
+                {draft.fromTemplate ? 'Rehydrated from a template' : 'The pla GenAI proposes'}
               </p>
               <p className="mt-1 text-[13.5px] leading-snug text-ink">{draft.summary}</p>
               <p className="mt-1.5 text-xs text-ink-muted">

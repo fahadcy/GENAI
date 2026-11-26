@@ -175,7 +175,7 @@ export default async function AuditPage({ searchParams }: { searchParams: Search
       </Card>
 
       <p className="mt-4 max-w-3xl text-2xs leading-relaxed text-ink-faint">
-        Audit events are append-only. Aurea has no code path that updates or deletes a recorded event, and
+        Audit events are append-only. GenAI has no code path that updates or deletes a recorded event, and
         the workspace advisory lock taken on every append means concurrent writers cannot fork the chain.
         Retention follows your plan; on Enterprise it follows your contract.
       </p>

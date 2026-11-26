@@ -212,7 +212,7 @@ function WhatYouCanPostTo() {
       <div className="border-b border-line px-5 py-4">
         <h3 className="text-sm font-semibold text-ink">What you can post to</h3>
         <p className="mt-0.5 text-[13px] leading-relaxed text-ink-muted">
-          The platforms decide this, not Aurea. Worth reading before you plan a campaign around a
+          The platforms decide this, not GenAI. Worth reading before you plan a campaign around a
           destination that is not available yet.
         </p>
       </div>

@@ -159,7 +159,7 @@ export function ConnectorGrid({
                       <span className="inline-flex items-center gap-1">
                         <ShieldCheck className="h-3 w-3" />
                         {def.authType === 'oauth2'
-                          ? 'OAuth 2.0 — no credentials stored in Aurea'
+                          ? 'OAuth 2.0 — no credentials stored in GenAI'
                           : def.authType === 'api_key'
                             ? 'API key, encrypted at rest'
                             : 'Basic auth, encrypted at rest'}

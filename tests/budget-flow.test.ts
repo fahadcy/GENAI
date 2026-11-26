@@ -38,7 +38,7 @@ import {
   runReconciliation,
   saveLine,
   setDiscrepancyStatus,
-  syncFromAurea,
+  syncFromGenAI,
   updatePlanSettings,
 } from '../src/lib/budget/service'
 import { decide, submitForReview } from '../src/lib/workflow/approvals'
@@ -266,7 +266,7 @@ describe('budget plan lifecycle', () => {
     await assert.rejects(enforceCardLimit({ workspaceId: fx.ws.id, actorId: fx.admin.id, cardId: csvCard.id, amountPence: 1 }), /issued cards/)
   })
 
-  test('history import gives curves to lines Aurea cannot see', async () => {
+  test('history import gives curves to lines GenAI cannot see', async () => {
     const lines = ['week,channel,spend,conversions,revenue']
     for (let i = 0; i < 10; i++) lines.push(`${addDays(today, -7 * (i + 1))},Events and sponsorship,${1000 + i * 150},${10 + i},${2000 + i * 100}`)
     lines.push('2026-01-01,Nonsense channel,10,1,1')
@@ -276,8 +276,8 @@ describe('budget plan lifecycle', () => {
     assert.deepEqual(r.channels, ['events'])
   })
 
-  test('syncs Aurea’s own spend without error on a workspace with no metrics', async () => {
-    const r = await syncFromAurea(other.ws.id)
+  test('syncs GenAI’s own spend without error on a workspace with no metrics', async () => {
+    const r = await syncFromGenAI(other.ws.id)
     assert.deepEqual(r, { weeks: 0, days: 0 })
   })
 

@@ -178,7 +178,7 @@ const RUNWAY: VideoModelSpec[] = [
     },
     priceVerifiedOn: '2026-09-03',
     priceSource: 'https://docs.dev.runwayml.com/',
-    notes: 'Longer social clips with reference images and native audio. WAN 3.0 supports 2-30 second generations; Aurea exposes 15s and 30s presets.',
+    notes: 'Longer social clips with reference images and native audio. WAN 3.0 supports 2-30 second generations; GenAI exposes 15s and 30s presets.',
   },
 ]
 

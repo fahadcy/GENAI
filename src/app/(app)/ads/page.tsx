@@ -66,7 +66,7 @@ export default async function AdsPage() {
         user={auth.user}
         role={auth.role}
         title="Google Ads"
-        description="Describe what you are selling and Aurea builds the campaign — you check it, approve it, then it goes to Google"
+        description="Describe what you are selling and GenAI builds the campaign — you check it, approve it, then it goes to Google"
         notifications={notifications}
         actions={
           canCreate ? (
@@ -144,7 +144,7 @@ export default async function AdsPage() {
               <EmptyState
                 icon={<Megaphone className="h-5 w-5" />}
                 title="No campaigns yet"
-                description="Tell Aurea in a sentence what you sell and who should buy it. You will get back a complete campaign — ad groups, keywords, headlines and a budget — to read through before anything is sent anywhere."
+                description="Tell GenAI in a sentence what you sell and who should buy it. You will get back a complete campaign — ad groups, keywords, headlines and a budget — to read through before anything is sent anywhere."
                 action={
                   canCreate ? (
                     <LinkButton href="/ads/new" variant="primary" size="sm">

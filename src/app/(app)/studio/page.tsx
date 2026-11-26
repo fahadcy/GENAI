@@ -168,7 +168,7 @@ export default async function StudioPage({
                   description={
                     q || status !== 'all' || channel !== 'all'
                       ? 'Clear the filters to see everything in the workspace.'
-                      : 'Write a brief and Aurea will produce channel-specific variants, each scored against your brand voice and legal rules before you read a word of it.'
+                      : 'Write a brief and GenAI will produce channel-specific variants, each scored against your brand voice and legal rules before you read a word of it.'
                   }
                   action={
                     canCreate && (

@@ -40,7 +40,7 @@ export function userAgent(): string {
       return 'http://localhost:3000'
     }
   })()
-  return `AureaBot/1.0 (+${app}; competitor research, respects robots.txt)`
+  return `GenAIBot/1.0 (+${app}; competitor research, respects robots.txt)`
 }
 
 /* ------------------------------------------------------------------ SSRF */
@@ -275,10 +275,10 @@ export type RobotsRules = {
 }
 
 /**
- * Parse the groups that apply to us: an `AureaBot` group if there is one,
+ * Parse the groups that apply to us: a `GenAIBot` group if there is one,
  * otherwise `*`. Longest match wins, Allow beats Disallow on a tie (RFC 9309).
  */
-export function parseRobots(text: string, agent = 'aureabot'): RobotsRules {
+export function parseRobots(text: string, agent = 'genaibot'): RobotsRules {
   const lines = text.split(/\r?\n/).map((l) => l.replace(/#.*$/, '').trim())
   type Group = { agents: string[]; allow: string[]; disallow: string[]; delay: number | null }
   const groups: Group[] = []

@@ -89,7 +89,7 @@ export function WorkspaceGeneralForm({
 
         <SettingRow label="Workspace URL" hint="Fixed after creation — audit exports are filed under it.">
           <div className="flex h-9 items-center rounded-lg border border-line bg-bg-subtle px-3 text-sm text-ink-muted">
-            <span className="text-ink-faint">aurea.app/</span>
+            <span className="text-ink-faint">genai.app/</span>
             <span className="font-medium text-ink">{slug}</span>
           </div>
         </SettingRow>

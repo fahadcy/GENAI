@@ -26,7 +26,7 @@ const VERSION = 'v1'
 function key(): Buffer {
   // A KDF rather than raw bytes: AUTH_SECRET is base64 of arbitrary length,
   // and AES-256 needs exactly 32 bytes.
-  return createHash('sha256').update(`aurea:social:${env().AUTH_SECRET}`).digest()
+  return createHash('sha256').update(`genai:social:${env().AUTH_SECRET}`).digest()
 }
 
 /** Returns `v1.<iv>.<authTag>.<ciphertext>`, all base64url. */

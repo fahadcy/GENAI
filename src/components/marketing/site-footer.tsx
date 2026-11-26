@@ -67,7 +67,7 @@ export function SiteFooter() {
             enterprise agreements are negotiated individually. Product names and trademarks belong to
             their respective owners.
           </p>
-          <p className="shrink-0 text-xs text-ink-faint">© 2026 Aurea</p>
+          <p className="shrink-0 text-xs text-ink-faint">© 2026 GenAI</p>
         </div>
       </Container>
     </footer>

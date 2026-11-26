@@ -1,7 +1,7 @@
 import type { Config } from 'tailwindcss'
 
 /**
- * Aurea design system.
+ * GenAI design system.
  * Every colour resolves through a CSS variable so the whole product themes
  * light/dark from one place and white-label re-skinning is a token swap.
  */

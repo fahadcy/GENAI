@@ -31,7 +31,7 @@ export function SiteHeader({ session }: { session: HeaderSession }) {
     <header className="sticky top-0 z-40 border-b border-line bg-bg/80 backdrop-blur-md">
       <Container className="flex h-16 items-center justify-between gap-6">
         <div className="flex min-w-0 items-center gap-8">
-          <Link href="/" className="shrink-0" aria-label="Aurea home">
+          <Link href="/" className="shrink-0" aria-label="GenAI home">
             <Wordmark size="md" />
           </Link>
           <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary">

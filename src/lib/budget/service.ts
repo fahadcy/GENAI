@@ -74,7 +74,7 @@ import type {
  * Budget Allocator — the service layer. Everything that touches the database
  * goes through here; the arithmetic lives in the pure modules beside it.
  *
- * Governance follows the rest of Aurea:
+ * Governance follows the rest of GenAI:
  *  - A plan is an approval subject ('budget_plan'). Editing an approved plan
  *    sends it back to draft, and only an approved plan at the approved version
  *    can be activated.
@@ -671,17 +671,17 @@ async function countRevisions(plan: BudgetPlan): Promise<number> {
 
 /* =========================================================== observations */
 
-/** Aurea's own metric channels → budget channels. */
+/** GenAI's own metric channels → budget channels. */
 const METRIC_MAP: Record<string, string> = Object.fromEntries(
   CHANNELS.filter((c) => c.metricChannel).map((c) => [c.metricChannel!, c.key]),
 )
 
 /**
- * Rebuild the 'aurea' observations and platform spend from Aurea's own data:
+ * Rebuild the 'genai' observations and platform spend from GenAI's own data:
  * metric facts (spend and conversions per channel), model usage (ai_runs) and
  * generated video. Idempotent.
  */
-export async function syncFromAurea(workspaceId: string): Promise<{ weeks: number; days: number }> {
+export async function syncFromGenAI(workspaceId: string): Promise<{ weeks: number; days: number }> {
   const since = addDays(today(), -7 * 104)
   const facts = await db
     .select({
@@ -703,7 +703,7 @@ export async function syncFromAurea(workspaceId: string): Promise<{ weeks: numbe
     const spend = Math.round(f.spend * 100)
     const wk = weekStart(String(f.day))
     const k = `${key}|${wk}`
-    const o = weekly.get(k) ?? { weekStart: wk, spendPence: 0, conversions: 0, revenuePence: 0, source: 'aurea' as const }
+    const o = weekly.get(k) ?? { weekStart: wk, spendPence: 0, conversions: 0, revenuePence: 0, source: 'genai' as const }
     o.spendPence += spend
     o.conversions += f.conversions
     o.revenuePence += Math.round(f.revenue * 100)
@@ -743,7 +743,7 @@ export async function syncFromAurea(workspaceId: string): Promise<{ weeks: numbe
     spendPence: o.spendPence,
     conversions: o.conversions,
     revenuePence: o.revenuePence,
-    source: 'aurea',
+    source: 'genai',
     updatedAt: now,
   }))
   for (let i = 0; i < obsRows.length; i += 500) {
@@ -755,7 +755,7 @@ export async function syncFromAurea(workspaceId: string): Promise<{ weeks: numbe
         set: { spendPence: sql`excluded.spend_pence`, conversions: sql`excluded.conversions`, revenuePence: sql`excluded.revenue_pence`, updatedAt: now },
       })
   }
-  const dayRows = [...daily.entries()].map(([k, p]) => ({ workspaceId, platform: k.split('|')[0], day: k.split('|')[1], spendPence: p, source: 'aurea', updatedAt: now }))
+  const dayRows = [...daily.entries()].map(([k, p]) => ({ workspaceId, platform: k.split('|')[0], day: k.split('|')[1], spendPence: p, source: 'genai', updatedAt: now }))
   for (let i = 0; i < dayRows.length; i += 500) {
     await db
       .insert(budgetPlatformSpend)
@@ -788,9 +788,9 @@ export async function observationsFor(workspaceId: string, channelKeys: string[]
     // Real history replaces the simulation once it has eight weeks with actual spend in them.
     const realWeeks = new Set(real.filter((r) => r.spendPence > 0).map((r) => String(r.weekStart))).size
     const use = realWeeks >= 8 || sim.length === 0 ? real : sim
-    // Several real sources for one week (Aurea metrics and a manual import) — prefer manual, then platform, then aurea.
+    // Several real sources for one week (GenAI metrics and a manual import) — prefer manual, then platform, then genai.
     const byWeek = new Map<string, (typeof rows)[number]>()
-    const rank: Record<string, number> = { manual: 4, statement: 3, platform: 2, aurea: 1, simulated: 0 }
+    const rank: Record<string, number> = { manual: 4, statement: 3, platform: 2, genai: 1, simulated: 0 }
     for (const r of use) {
       const have = byWeek.get(String(r.weekStart))
       if (!have || (rank[r.source] ?? 0) > (rank[have.source] ?? 0)) byWeek.set(String(r.weekStart), r)
@@ -813,7 +813,7 @@ export async function observationsFor(workspaceId: string, channelKeys: string[]
 
 /**
  * Import weekly history for any channel from a CSV: week (or date), channel,
- * spend, conversions, revenue. This is how lines Aurea cannot see — events,
+ * spend, conversions, revenue. This is how lines GenAI cannot see — events,
  * print, an agency's channels — get response curves.
  */
 export async function importHistoryCsv(args: { workspaceId: string; actorId: string; text: string }): Promise<{ rows: number; channels: string[]; skipped: number }> {
@@ -887,7 +887,7 @@ export async function importHistoryCsv(args: { workspaceId: string; actorId: str
 
 
 /**
- * One spend figure per platform per day. Per platform, a real source (Aurea's
+ * One spend figure per platform per day. Per platform, a real source (GenAI's
  * own metrics, an import) is used when it covers most of the window; a
  * simulation fills in only for platforms with no real coverage. Mixing the
  * two day by day would produce a series that is neither.
@@ -909,7 +909,7 @@ export function pickPlatformDays(
     const use = realCover >= window * 0.7 || sim.length === 0 ? real : sim
     const perDay = new Map<string, number>()
     for (const r of use) perDay.set(String(r.day), (perDay.get(String(r.day)) ?? 0) + r.spendPence)
-    const source = (use[0]?.source ?? 'aurea') as Provenance
+    const source = (use[0]?.source ?? 'genai') as Provenance
     for (const [day, spendPence] of perDay) out.push({ platform, day, spendPence, source })
   }
   return out
@@ -1441,10 +1441,10 @@ export async function setCardChannel(args: { workspaceId: string; actorId: strin
 export async function enforceCardLimit(args: { workspaceId: string; actorId: string; cardId: string; amountPence: number }) {
   const [card] = await db.select().from(paymentCards).where(and(eq(paymentCards.workspaceId, args.workspaceId), eq(paymentCards.id, args.cardId))).limit(1)
   if (!card) throw new BudgetError('Card not found.')
-  if (card.provider !== 'airwallex' && card.provider !== 'simulated') throw new BudgetError('Only issued cards (Airwallex) can have their limit set from Aurea. Read-only cards are monitored, not controlled.')
+  if (card.provider !== 'airwallex' && card.provider !== 'simulated') throw new BudgetError('Only issued cards (Airwallex) can have their limit set from GenAI. Read-only cards are monitored, not controlled.')
   if (!(args.amountPence > 0)) throw new BudgetError('Set a limit above zero.')
   if (card.currency.toUpperCase() !== 'GBP') {
-    throw new BudgetError(`This card is held in ${card.currency}. Budget lines are in GBP, so Aurea will not set its limit from one — set it in Airwallex in ${card.currency}.`)
+    throw new BudgetError(`This card is held in ${card.currency}. Budget lines are in GBP, so GenAI will not set its limit from one — set it in Airwallex in ${card.currency}.`)
   }
   let sent: Record<string, unknown> = { simulated: true }
   if (card.provider === 'airwallex') {
@@ -1875,13 +1875,13 @@ export type LinkedControl = {
   status: string
   currentDailyPence: number | null
   recommendedDailyPence: number | null
-  /** Whether Aurea can apply it, and if not, why. */
+  /** Whether GenAI can apply it, and if not, why. */
   canApply: boolean
   note: string
 }
 
 /**
- * Where the plan's money is actually controlled: Aurea Google Ads campaigns
+ * Where the plan's money is actually controlled: GenAI Google Ads campaigns
  * linked to a line, the Video Studio monthly ceiling, and dedicated cards.
  * The recommended daily budget lands the line on plan from today.
  */
@@ -1916,7 +1916,7 @@ export async function linkedControls(workspaceId: string, plan: PlanWithLines): 
           recommendedDailyPence: rec,
           canApply: !pushed && plan.status === 'active',
           note: pushed
-            ? 'Already in Google. Change the daily budget there; Aurea does not edit live campaigns.'
+            ? 'Already in Google. Change the daily budget there; GenAI does not edit live campaigns.'
             : plan.status !== 'active'
               ? 'Activate the plan first.'
               : 'Applying changes the draft and sends it back for approval, like any budget edit.',
@@ -2049,11 +2049,11 @@ export async function loadSimulation(args: { workspaceId: string; actorId: strin
 
 /* ================================================================= cron */
 
-/** Nightly: refresh from Aurea, sync connected cards (at most every six hours), reconcile the live plan. */
+/** Nightly: refresh from GenAI, sync connected cards (at most every six hours), reconcile the live plan. */
 export async function budgetTick(workspaceId: string): Promise<{ reconciled: boolean; cards: number }> {
   const plan = await activePlan(workspaceId)
   if (!plan) return { reconciled: false, cards: 0 }
-  await syncFromAurea(workspaceId)
+  await syncFromGenAI(workspaceId)
   let synced = 0
   for (const c of await listCards(workspaceId)) {
     if (c.provider !== 'truelayer' && c.provider !== 'airwallex') continue

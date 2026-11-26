@@ -85,7 +85,7 @@ export function CostStack() {
         <Footnote className="mt-3">
           Indicative published list prices as of August 2026, shown in the currency each vendor
           publishes. These are entry points that rise with seats, contact tiers and add-ons;
-          enterprise agreements are negotiated individually. Aurea prices are in GBP and are not a
+          enterprise agreements are negotiated individually. GenAI prices are in GBP and are not a
           converted equivalent — the comparison is about how many contracts and handoffs you are
           carrying, not a like-for-like total.
         </Footnote>
@@ -93,7 +93,7 @@ export function CostStack() {
 
       <div className="flex flex-col rounded-panel border border-brand-400 bg-surface p-6 shadow-pop ring-1 ring-brand-400 lg:self-start">
         <p className="text-2xs font-semibold uppercase tracking-wider text-brand-600">Instead</p>
-        <h3 className="mt-2 text-xl font-semibold tracking-tight text-ink">Aurea Growth</h3>
+        <h3 className="mt-2 text-xl font-semibold tracking-tight text-ink">GenAI Growth</h3>
         <div className="mt-4 flex items-baseline gap-1.5">
           <span className="tnum text-[2.1rem] font-semibold leading-none tracking-tight text-ink">£790</span>
           <span className="text-[13px] text-ink-muted">per month</span>

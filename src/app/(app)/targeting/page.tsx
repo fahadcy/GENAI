@@ -129,7 +129,7 @@ export default async function TargetingPage() {
               <EmptyState
                 icon={<Target className="h-5 w-5" />}
                 title="No audiences saved yet"
-                description="Describe the audience you want in the builder above. You will see the rules Aurea derived, its size and its reachability before you commit to anything."
+                description="Describe the audience you want in the builder above. You will see the rules GenAI derived, its size and its reachability before you commit to anything."
               />
             </Card>
           ) : (

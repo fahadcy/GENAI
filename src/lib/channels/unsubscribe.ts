@@ -81,7 +81,7 @@ export function oneClickUrl(claim: UnsubscribeClaim): string {
 
 /* ------------------------------------------------------------- injection */
 
-const FOOTER_MARKER = '<!--aurea-unsubscribe-->'
+const FOOTER_MARKER = '<!--genai-unsubscribe-->'
 
 /**
  * Adds the footer to an HTML email.

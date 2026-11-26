@@ -199,8 +199,8 @@ export const blogTool: ToolDef<z.infer<typeof BlogInput>, AgentCtx> = {
     const r = addBlogPost(src, i, await ctx.site.publicFiles(sha));
     if (r.problems.length) return { summary: `Not drafted. Fix first:\n- ${r.problems.join('\n- ')}`, data: { warnings: r.warnings } };
     const slug = slugify(i.title);
-    const pr = await ctx.site.openPullRequest({ branch: `aurea/blog-${slug}`.slice(0, 80), title: `Blog: ${i.title}`, message: `Add blog post: ${i.title}`, files: r.changes, expectedBaseSha: sha,
-      body: `Drafted by the Aurea growth agent.\n\nWill appear at ${r.url} once merged.\n\n${r.warnings.length ? `**Check before merging:**\n${r.warnings.map(w => `- ${w}`).join('\n')}\n\n` : ''}Review the Vercel preview, then merge to publish. Close the PR to discard.` });
+    const pr = await ctx.site.openPullRequest({ branch: `genai/blog-${slug}`.slice(0, 80), title: `Blog: ${i.title}`, message: `Add blog post: ${i.title}`, files: r.changes, expectedBaseSha: sha,
+      body: `Drafted by the GenAI growth agent.\n\nWill appear at ${r.url} once merged.\n\n${r.warnings.length ? `**Check before merging:**\n${r.warnings.map(w => `- ${w}`).join('\n')}\n\n` : ''}Review the Vercel preview, then merge to publish. Close the PR to discard.` });
     const e = ctx.store.add({ source: 'website', label: `Draft pull request #${pr.number} adds the post "${i.title}"`, url: pr.url });
     return { summary: `${e.label}. ${r.warnings.length} things to check.`, evidence: [e], proposals: [{ kind: 'pull_request', title: `Blog: ${i.title}`, url: pr.url, status: 'draft' }] };
   },
@@ -223,8 +223,8 @@ export const landingTool: ToolDef<z.infer<typeof LandingInput>, AgentCtx> = {
     const r = addKeywordLanding({ landings, sitemap, existingRoutes: routes }, i);
     if (r.problems.length) return { summary: `Not drafted. Fix first:\n- ${r.problems.join('\n- ')}`, data: { warnings: r.warnings } };
     const slug = slugify(i.keyword);
-    const pr = await ctx.site.openPullRequest({ branch: `aurea/landing-${slug}`.slice(0, 80), title: `Landing page: ${i.keyword}`, message: `Add landing page for "${i.keyword}"`, files: r.changes, expectedBaseSha: sha,
-      body: `Drafted by the Aurea growth agent.\n\nNew page: ${r.url}\n\n${r.warnings.length ? `**Check before merging:**\n${r.warnings.map(w => `- ${w}`).join('\n')}\n\n` : ''}Review the preview, then merge to publish.` });
+    const pr = await ctx.site.openPullRequest({ branch: `genai/landing-${slug}`.slice(0, 80), title: `Landing page: ${i.keyword}`, message: `Add landing page for "${i.keyword}"`, files: r.changes, expectedBaseSha: sha,
+      body: `Drafted by the GenAI growth agent.\n\nNew page: ${r.url}\n\n${r.warnings.length ? `**Check before merging:**\n${r.warnings.map(w => `- ${w}`).join('\n')}\n\n` : ''}Review the preview, then merge to publish.` });
     const e = ctx.store.add({ source: 'website', label: `Draft pull request #${pr.number} adds a landing page for "${i.keyword}"`, url: pr.url });
     return { summary: e.label, evidence: [e], proposals: [{ kind: 'pull_request', title: `Landing: ${i.keyword}`, url: pr.url, status: 'draft' }] };
   },

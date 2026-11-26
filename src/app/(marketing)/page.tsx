@@ -18,9 +18,9 @@ import { CostStack } from '@/components/marketing/cost-stack'
 import { Faq, type FaqItem } from '@/components/marketing/faq'
 
 export const metadata: Metadata = {
-  title: 'Aurea — one governed loop from brief to result',
+  title: 'GenAI — one governed loop from brief to result',
   description:
-    'Suites own your campaigns, AI writers own the draft, schedulers own the calendar. Aurea is the connective tissue: generate, review, approve, publish and monitor in one governed pipeline.',
+    'Suites own your campaigns, AI writers own the draft, schedulers own the calendar. GenAI is the connective tissue: generate, review, approve, publish and monitor in one governed pipeline.',
 }
 
 export default async function LandingPage() {
@@ -69,7 +69,7 @@ function Hero({ home }: { home: string | null }) {
           <p className="mx-auto mt-6 max-w-2xl text-pretty text-[17px] leading-relaxed text-ink-muted sm:text-lg">
             Suites own your campaigns. AI writers own the draft. Schedulers own the calendar. Nobody
             owns the connective tissue between them — so your team carries the work across by hand.
-            Aurea is one pipeline where a task is generated, reviewed, approved, published and
+            GenAI is one pipeline where a task is generated, reviewed, approved, published and
             monitored without leaving the workspace.
           </p>
 
@@ -235,7 +235,7 @@ const TARGETS = [
     note: 'From the 2–4 weeks a manual, multi-tool cycle typically takes.',
   },
   { value: '30%+', label: 'Faster approvals', note: 'Reduction in average time from submission to decision.' },
-  { value: '20%+', label: 'Lower cost per signup', note: 'Cost per acquired signup, against the pre-Aurea baseline.' },
+  { value: '20%+', label: 'Lower cost per signup', note: 'Cost per acquired signup, against the pre-GenAI baseline.' },
   { value: '≥95%', label: 'Pass brand check unedited', note: 'Assets clearing the guardrails with no human edit.' },
 ]
 
@@ -250,7 +250,7 @@ function Targets() {
               These are targets, not results.
             </h2>
             <p className="mt-4 text-[16px] leading-relaxed text-ink-muted">
-              Aurea is designed to hit the four numbers on the right. We are not reporting them as
+              GenAI is designed to hit the four numbers on the right. We are not reporting them as
               achieved outcomes and we are not attributing them to anyone else&rsquo;s campaigns.
             </p>
             <p className="mt-3 text-[16px] leading-relaxed text-ink-muted">
@@ -325,10 +325,10 @@ function Replaces() {
 
 const FAQ_ITEMS: FaqItem[] = [
   {
-    q: 'Is Aurea trying to replace my CRM?',
+    q: 'Is GenAI trying to replace my CRM?',
     a: (
       <>
-        No. Your CRM stays where it is. Aurea sits above the channels: connectors push approved work
+        No. Your CRM stays where it is. GenAI sits above the channels: connectors push approved work
         out to email, social, ads and web, and pull results back in so the loop can close. What it
         does replace is the improvised layer between your suite, your writing tool and your scheduler
         — the spreadsheets, the approval emails and the manual re-keying.
@@ -341,7 +341,7 @@ const FAQ_ITEMS: FaqItem[] = [
       <>
         A writing tool bolted to a suite still leaves you with two products and a person in between.
         The draft does not know what campaign it belongs to, the approval does not know what changed
-        since the last version, and the results never reach the model that produced the copy. Aurea
+        since the last version, and the results never reach the model that produced the copy. GenAI
         is one pipeline, so the brief, the score, the sign-off, the send and the outcome are states of
         the same record rather than files moving between systems.
       </>
@@ -376,7 +376,7 @@ const FAQ_ITEMS: FaqItem[] = [
       <>
         They are the bar we designed the product to clear, not outcomes we are reporting. Campaign
         turnaround of 2–5 days, approvals 30%+ faster, cost per acquired signup down 20%+, and 95% or
-        more of assets passing the brand check unedited. Aurea instruments all four inside your own
+        more of assets passing the brand check unedited. GenAI instruments all four inside your own
         workspace, so you can check us against them with your own data.
       </>
     ),

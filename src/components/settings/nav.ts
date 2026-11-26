@@ -75,7 +75,7 @@ export const SETTINGS_NAV: { section: string; items: SettingsNavItem[] }[] = [
         icon: Plug,
         blurb: 'CRM, ESP, social, ads',
         title: 'Integrations',
-        description: 'Every channel Aurea publishes to, and every system it reads from.',
+        description: 'Every channel GenAI publishes to, and every system it reads from.',
         requires: 'connector:manage',
       },
     ],

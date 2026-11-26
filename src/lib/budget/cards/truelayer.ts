@@ -18,9 +18,9 @@ import { jsonRequest } from './http'
  *    offline_access. No payment scope is ever requested.
  *  - Card transactions and pending card transactions are separate endpoints,
  *    and pending ones cannot be filtered by date.
- *  - Transaction ids may change between requests, so Aurea deduplicates on
+ *  - Transaction ids may change between requests, so GenAI deduplicates on
  *    its own key (merchants.txKey), not on TrueLayer's id.
- *  - In the UK, Aurea must ask the customer to reconfirm access every 90 days
+ *  - In the UK, GenAI must ask the customer to reconfirm access every 90 days
  *    (FCA PS21/19). consentExpiresAt drives that prompt.
  *  - Not every bank supports the cards scope; the error says so plainly.
  */
@@ -49,7 +49,7 @@ export function trueLayerRedirectUri(): string {
 const STATE_TTL_MS = 15 * 60 * 1000
 
 /** Name of the httpOnly cookie that binds a bank connection to the browser that started it. */
-export const NONCE_COOKIE = 'aurea_tl_nonce'
+export const NONCE_COOKIE = 'genai_tl_nonce'
 
 export function newNonce(): string {
   return randomBytes(18).toString('base64url')
@@ -181,7 +181,7 @@ export async function pendingCardTransactions(token: string, accountId: string):
   }
 }
 
-/** TrueLayer card amounts: DEBIT is money out. Normalised to Aurea's sign (positive = out). */
+/** TrueLayer card amounts: DEBIT is money out. Normalised to GenAI's sign (positive = out). */
 export function normaliseTrueLayerTx(t: TrueLayerTx, status: 'pending' | 'settled') {
   const pence = Math.round(Math.abs(t.amount) * 100)
   const out = t.transaction_type ? t.transaction_type.toUpperCase() !== 'CREDIT' : t.amount >= 0

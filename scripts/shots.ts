@@ -28,7 +28,7 @@ async function main() {
       colorScheme: theme,
     })
     await ctx.addCookies([
-      { name: 'aurea_session', value: token, domain: 'localhost', path: '/' },
+      { name: 'genai_session', value: token, domain: 'localhost', path: '/' },
     ])
     const page = await ctx.newPage()
     const errors: string[] = []

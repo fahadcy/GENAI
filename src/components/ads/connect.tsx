@@ -121,7 +121,7 @@ function NotConfigured({ missing }: { missing: string[] }) {
   return (
     <div className="space-y-4 px-5 py-4">
       <p className="max-w-2xl text-[13px] leading-relaxed text-ink-muted">
-        Aurea is running its built-in campaign builder and checker. Every campaign you make here is
+        GenAI is running its built-in campaign builder and checker. Every campaign you make here is
         real work — the ad groups, keywords, headlines and budgets are the ones that would be
         created — and it can be reviewed and approved in the normal way. What it cannot do yet is
         create anything inside Google, so no money can be spent.
@@ -277,7 +277,7 @@ function ConnectForm({ canManage }: { canManage: boolean }) {
       </div>
       <Field
         label="What to call it here"
-        hint="Only affects what you see in Aurea. Left blank, we use the name Google has."
+        hint="Only affects what you see in GenAI. Left blank, we use the name Google has."
       >
         <Input
           value={label}

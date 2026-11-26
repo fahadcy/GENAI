@@ -1,19 +1,19 @@
 /**
- * @aurea/agent — the growth agent.
+ * @genai/agent — the growth agent.
  *
  * createGrowthAgent() wires the CRM, Companies House, The Gazette, the
  * website repository and a model from environment variables. Everything is
  * optional except the CRM: missing pieces make their tools explain what to
  * connect, rather than fail.
  *
- *   AUREA_AGENT_CRM_URL      https://crm.cy-group.co.uk
- *   AUREA_AGENT_CRM_TOKEN    cya_…        (CRM → Admin → Growth agent → Access tokens)
- *   AUREA_AGENT_BUSINESS_ID  CRM business id this agent works for
+ *   GENAI_AGENT_CRM_URL      https://crm.cy-group.co.uk
+ *   GENAI_AGENT_CRM_TOKEN    cya_…        (CRM → Admin → Growth agent → Access tokens)
+ *   GENAI_AGENT_BUSINESS_ID  CRM business id this agent works for
  *   CH_API_KEY               Companies House REST key (free)
  *   GITHUB_SITE_REPO         owner/repo of the website
  *   GITHUB_SITE_TOKEN        fine-grained token: that repo only, Contents + Pull requests read/write
  *   ANTHROPIC_API_KEY        or OPENAI_API_KEY; neither → simulator
- *   AUREA_AGENT_MODEL        model id (default claude-sonnet-5-5 for Anthropic; required for OpenAI)
+ *   GENAI_AGENT_MODEL        model id (default claude-sonnet-5-5 for Anthropic; required for OpenAI)
  */
 import { CrmClient, type CrmPort } from './crm/client';
 import { CompaniesHouseClient, type CompaniesHousePort } from './leads/companiesHouse';
@@ -61,16 +61,16 @@ export interface GrowthAgentDeps {
 }
 
 export function modelFromEnv(env: Record<string, string | undefined> = process.env): ModelClient {
-  if (env.ANTHROPIC_API_KEY) return new AnthropicModel(env.ANTHROPIC_API_KEY, env.AUREA_AGENT_MODEL || 'claude-sonnet-5-5');
-  if (env.OPENAI_API_KEY) return new OpenAIModel(env.OPENAI_API_KEY, env.AUREA_AGENT_MODEL ?? '', { baseUrl: env.OPENAI_BASE_URL });
+  if (env.ANTHROPIC_API_KEY) return new AnthropicModel(env.ANTHROPIC_API_KEY, env.GENAI_AGENT_MODEL || 'claude-sonnet-5-5');
+  if (env.OPENAI_API_KEY) return new OpenAIModel(env.OPENAI_API_KEY, env.GENAI_AGENT_MODEL ?? '', { baseUrl: env.OPENAI_BASE_URL });
   return new SimulatedModel();
 }
 
 export function depsFromEnv(env: Record<string, string | undefined> = process.env): GrowthAgentDeps {
-  if (!env.AUREA_AGENT_CRM_URL || !env.AUREA_AGENT_CRM_TOKEN) throw new Error('Set AUREA_AGENT_CRM_URL and AUREA_AGENT_CRM_TOKEN');
+  if (!env.GENAI_AGENT_CRM_URL || !env.GENAI_AGENT_CRM_TOKEN) throw new Error('Set GENAI_AGENT_CRM_URL and GENAI_AGENT_CRM_TOKEN');
   const [owner, repo] = (env.GITHUB_SITE_REPO ?? '').split('/');
   return {
-    crm: new CrmClient({ baseUrl: env.AUREA_AGENT_CRM_URL, token: env.AUREA_AGENT_CRM_TOKEN }),
+    crm: new CrmClient({ baseUrl: env.GENAI_AGENT_CRM_URL, token: env.GENAI_AGENT_CRM_TOKEN }),
     ch: env.CH_API_KEY ? new CompaniesHouseClient(env.CH_API_KEY) : null,
     site: owner && repo && env.GITHUB_SITE_TOKEN ? new GitHubSite({ owner, repo, token: env.GITHUB_SITE_TOKEN }) : null,
     model: modelFromEnv(env),

@@ -68,7 +68,7 @@ async function tick(cycle: number) {
           return 0
         })
         if (rescanned > 0) console.log(`${stamp} [${ws.name}] competitors rescanned=${rescanned}`)
-        /* Budget: Aurea's own spend, connected cards (each at most every six
+        /* Budget: GenAI's own spend, connected cards (each at most every six
            hours) and the three-way reconciliation of the live plan. */
         const budget = await budgetTick(ws.id).catch((e) => {
           console.error(`${stamp} [${ws.name}] budget tick failed:`, e instanceof Error ? e.message : e)

@@ -133,24 +133,24 @@ describe('GitHub pull requests', () => {
     }) as unknown as typeof fetch;
     return { calls, gh: new GitHubSite({ owner: 'cy', repo: 'site', token: 't', fetch: f }) };
   }
-  it('one atomic commit on an aurea/ branch, then a DRAFT PR', async () => {
+  it('one atomic commit on an genai/ branch, then a DRAFT PR', async () => {
     const { calls, gh } = fakeGh();
-    const pr = await gh.openPullRequest({ branch: 'aurea/blog-x', title: 'Blog: x', body: 'b', message: 'm', files: [{ path: 'lib/blogData.ts', content: 'c' }] });
-    expect(pr).toEqual({ number: 42, url: 'https://github.com/cy/site/pull/42', branch: 'aurea/blog-x', draft: true });
+    const pr = await gh.openPullRequest({ branch: 'genai/blog-x', title: 'Blog: x', body: 'b', message: 'm', files: [{ path: 'lib/blogData.ts', content: 'c' }] });
+    expect(pr).toEqual({ number: 42, url: 'https://github.com/cy/site/pull/42', branch: 'genai/blog-x', draft: true });
     expect(calls.map(c => `${c.method} ${c.path}`)).toEqual(['GET ', 'GET /git/ref/heads/main', 'GET /git/commits/base123', 'POST /git/trees', 'POST /git/commits', 'POST /git/refs', 'POST /pulls']);
     expect(calls.find(c => c.path === '/git/commits')!.body.parents).toEqual(['base123']);
     expect(calls.some(c => c.path.includes('/heads/main') && c.method !== 'GET')).toBe(false);   // never writes main
   });
   it('refuses to commit if the site moved after the files were read', async () => {
     const { gh } = fakeGh();
-    await expect(gh.openPullRequest({ branch: 'aurea/x1x', title: '', body: '', message: '', files: [{ path: 'a.ts', content: '' }], expectedBaseSha: 'older999' })).rejects.toThrow(/changed while/);
+    await expect(gh.openPullRequest({ branch: 'genai/x1x', title: '', body: '', message: '', files: [{ path: 'a.ts', content: '' }], expectedBaseSha: 'older999' })).rejects.toThrow(/changed while/);
     expect(await gh.headSha()).toBe('base123');
   });
   it('refuses unsafe branches and paths, and reports a taken branch', async () => {
     const { gh } = fakeGh();
-    await expect(gh.openPullRequest({ branch: 'main', title: '', body: '', message: '', files: [{ path: 'a', content: '' }] })).rejects.toThrow(/aurea\//);
-    await expect(gh.openPullRequest({ branch: 'aurea/x1x', title: '', body: '', message: '', files: [{ path: '.github/workflows/x.yml', content: '' }] })).rejects.toThrow(/Refusing/);
-    await expect(gh.openPullRequest({ branch: 'aurea/x1x', title: '', body: '', message: '', files: [{ path: '../etc', content: '' }] })).rejects.toThrow(/Refusing/);
-    await expect(gh.openPullRequest({ branch: 'aurea/taken', title: '', body: '', message: '', files: [{ path: 'a.ts', content: '' }] })).rejects.toThrow(/already exists/);
+    await expect(gh.openPullRequest({ branch: 'main', title: '', body: '', message: '', files: [{ path: 'a', content: '' }] })).rejects.toThrow(/genai\//);
+    await expect(gh.openPullRequest({ branch: 'genai/x1x', title: '', body: '', message: '', files: [{ path: '.github/workflows/x.yml', content: '' }] })).rejects.toThrow(/Refusing/);
+    await expect(gh.openPullRequest({ branch: 'genai/x1x', title: '', body: '', message: '', files: [{ path: '../etc', content: '' }] })).rejects.toThrow(/Refusing/);
+    await expect(gh.openPullRequest({ branch: 'genai/taken', title: '', body: '', message: '', files: [{ path: 'a.ts', content: '' }] })).rejects.toThrow(/already exists/);
   });
 });

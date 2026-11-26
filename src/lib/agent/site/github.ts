@@ -2,7 +2,7 @@
  * Website changes as GitHub pull requests.
  *
  * The agent never pushes to the default branch. It makes one atomic commit
- * on a new aurea/… branch (Git Data API: tree → commit → ref) and opens a
+ * on a new genai/… branch (Git Data API: tree → commit → ref) and opens a
  * DRAFT pull request. A person reviews the diff and the Vercel preview,
  * merges, and the site deploys; reverting is reverting the PR.
  *
@@ -77,7 +77,7 @@ export class GitHubSite {
    * committing would silently undo whatever landed in between.
    */
   async openPullRequest(o: { branch: string; title: string; body: string; message: string; files: { path: string; content: string }[]; expectedBaseSha?: string }): Promise<PullRequest> {
-    if (!/^aurea\/[a-z0-9][a-z0-9._/-]{2,80}$/.test(o.branch)) throw new Error('Branch must start with aurea/ and use lower-case letters, digits, . _ / -');
+    if (!/^genai\/[a-z0-9][a-z0-9._/-]{2,80}$/.test(o.branch)) throw new Error('Branch must start with genai/ and use lower-case letters, digits, . _ / -');
     if (!o.files.length) throw new Error('Nothing to change');
     for (const f of o.files) if (f.path.includes('..') || f.path.startsWith('/') || /^\.github\//.test(f.path)) throw new Error(`Refusing to write ${f.path}`);
     const base = await this.defaultBranch();

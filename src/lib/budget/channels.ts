@@ -28,7 +28,7 @@ export type ChannelDef = {
   key: string
   label: string
   category: LineCategory
-  /** Aurea's own metric channel, where outcomes are already tracked. */
+  /** GenAI's own metric channel, where outcomes are already tracked. */
   metricChannel?: string
   /** Card descriptor patterns, case-insensitive. */
   merchants?: RegExp[]
@@ -141,7 +141,7 @@ export const CHANNELS: ChannelDef[] = [
     label: 'Video production',
     category: 'production',
     merchants: [/RUNWAY/i, /VIMEO/i, /ENVATO/i],
-    description: 'Shoots, editing, and generated video (Aurea Video Studio lands here).',
+    description: 'Shoots, editing, and generated video (GenAI Video Studio lands here).',
   },
   {
     key: 'creative_design',
@@ -157,7 +157,7 @@ export const CHANNELS: ChannelDef[] = [
     label: 'AI generation',
     category: 'ai',
     merchants: [/OPENAI/i, /ANTHROPIC/i, /GOOGLE\s*\*\s*CLOUD/i],
-    description: 'Model usage. Aurea’s own generation cost is counted here automatically.',
+    description: 'Model usage. GenAI’s own generation cost is counted here automatically.',
   },
 
   /* -------------------------------------------------------------- tools */

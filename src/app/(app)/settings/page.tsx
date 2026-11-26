@@ -190,7 +190,7 @@ export default async function SettingsOverviewPage() {
       <div className="mt-8">
         <SectionHeading
           title="What lives where"
-          description="Settings in Aurea are not preferences — most of them are enforced at generation, submission or publish time."
+          description="Settings in GenAI are not preferences — most of them are enforced at generation, submission or publish time."
         />
         <div className="grid gap-3 md:grid-cols-3">
           <ExplainerCard

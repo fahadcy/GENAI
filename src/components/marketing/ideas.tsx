@@ -3,7 +3,7 @@ import { Braces, Gauge, RotateCcw, Sparkles, Undo2 } from 'lucide-react'
 import { cn } from '@/lib/cn'
 
 /**
- * The four ideas that make Aurea different, each paired with something the
+ * The four ideas that make GenAI different, each paired with something the
  * reader can actually inspect: the real score weighting, the real field
  * catalogue the natural-language builder is restricted to, the real set of
  * copilot actions. Claims with mechanisms attached are harder to dismiss.

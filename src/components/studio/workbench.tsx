@@ -254,7 +254,7 @@ export function AssetWorkbench(props: Props) {
                   Schedule this
                 </Button>
                 <p className="text-xs leading-relaxed text-ink-muted">
-                  Approved at v{props.approval?.subjectVersion ?? asset.version}. Aurea can pick the
+                  Approved at v{props.approval?.subjectVersion ?? asset.version}. GenAI can pick the
                   send time from how this audience actually engages, or you can set it by hand.
                 </p>
               </>
@@ -775,7 +775,7 @@ function ScheduleModal({
                 className="mt-0.5 accent-[rgb(var(--brand-600))]"
               />
               <span>
-                <span className="block text-[13px] font-medium text-ink">Let Aurea choose</span>
+                <span className="block text-[13px] font-medium text-ink">Let GenAI choose</span>
                 <span className="mt-0.5 block text-xs leading-relaxed text-ink-muted">
                   Picks the slot from when this segment actually engages and how this channel has
                   performed here, and tells you why.

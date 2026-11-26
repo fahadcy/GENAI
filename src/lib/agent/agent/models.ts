@@ -67,12 +67,12 @@ export class AnthropicModel implements ModelClient {
   }
 }
 
-/** OpenAI-compatible chat completions (OpenAI, Azure OpenAI, or Aurea's existing gateway). */
+/** OpenAI-compatible chat completions (OpenAI, Azure OpenAI, or GenAI's existing gateway). */
 export class OpenAIModel implements ModelClient {
   readonly simulated = false;
   constructor(private key: string, readonly id: string, private opts: { fetch?: typeof fetch; baseUrl?: string } = {}) {
     if (!key) throw new Error('OPENAI_API_KEY is empty');
-    if (!id) throw new Error('Set AUREA_AGENT_MODEL to the OpenAI model id to use');
+    if (!id) throw new Error('Set GENAI_AGENT_MODEL to the OpenAI model id to use');
   }
   async complete(messages: Message[], tools: ToolSpec[]): Promise<ModelTurn> {
     const msgs = messages.map(m => {

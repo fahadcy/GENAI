@@ -29,7 +29,7 @@ export type LineCategory =
   | 'owned' // email, SEO content, organic social: curves apply when outcomes are tracked
   | 'production' // creative, video, photography
   | 'tools' // SaaS and data subscriptions
-  | 'ai' // model and generation costs (Aurea's own usage lands here)
+  | 'ai' // model and generation costs (GenAI's own usage lands here)
   | 'people' // agency fees, freelancers
   | 'events' // events, sponsorship, field marketing
   | 'offline' // print, out-of-home, radio
@@ -37,7 +37,7 @@ export type LineCategory =
 
 export type Objective = 'conversions' | 'revenue' | 'profit'
 
-export type Provenance = 'aurea' | 'platform' | 'card' | 'statement' | 'manual' | 'simulated'
+export type Provenance = 'genai' | 'platform' | 'card' | 'statement' | 'manual' | 'simulated'
 
 /* --------------------------------------------------------------- history */
 

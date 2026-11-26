@@ -9,7 +9,7 @@ import { Faq, type FaqItem } from '@/components/marketing/faq'
 export const metadata: Metadata = {
   title: 'Pricing',
   description:
-    'Aurea pricing: Studio £49 per seat per month, Growth £790 per month for 5 seats, Scale £1,900 per month for 15 seats, and custom Enterprise agreements. 14-day trial, no card.',
+    'GenAI pricing: Studio £49 per seat per month, Growth £790 per month for 5 seats, Scale £1,900 per month for 15 seats, and custom Enterprise agreements. 14-day trial, no card.',
 }
 
 export default function PricingPage() {
@@ -230,7 +230,7 @@ function MarketContext() {
           </div>
           <div className="border-t border-line bg-brand-50 px-5 py-4">
             <p className="text-[13.5px] leading-relaxed text-brand-700">
-              <span className="font-semibold">Aurea Growth is £790 a month with 5 seats</span> and
+              <span className="font-semibold">GenAI Growth is £790 a month with 5 seats</span> and
               covers all three jobs in one pipeline — which is the comparison worth making: how many
               contracts and handoffs you are carrying, not a converted total.
             </p>
@@ -241,7 +241,7 @@ function MarketContext() {
           Indicative published list prices as of August 2026, in the currency each vendor publishes.
           They are entry points that rise with seats, contacts and add-ons; onboarding is often
           charged separately, and enterprise agreements are negotiated individually. Verify with the
-          vendor before relying on any figure here. Aurea prices are in GBP and are not converted
+          vendor before relying on any figure here. GenAI prices are in GBP and are not converted
           equivalents. Product names and trademarks belong to their respective owners.
         </Footnote>
       </Container>

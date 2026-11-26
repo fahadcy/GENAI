@@ -44,7 +44,7 @@ const finding = (
  * what arrived rather than what was ordered.
  */
 export async function probeVideo(bytes: Uint8Array, ffprobePath = 'ffprobe'): Promise<VideoMediaFacts> {
-  const dir = await mkdtemp(join(tmpdir(), 'aurea-probe-'))
+  const dir = await mkdtemp(join(tmpdir(), 'genai-probe-'))
   const file = join(dir, 'clip.mp4')
   try {
     await writeFile(file, bytes)

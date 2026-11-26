@@ -97,7 +97,7 @@ export function AllocatorPanel({
             description={
               hasHistory
                 ? 'Run the allocator to fit a response curve for every line with tracked outcomes and get a recommended split.'
-                : 'Curves need weekly spend and outcomes. Aurea reads its own Google Ads, Meta, email and blog results automatically; import history for anything else from the Cards tab, or load the simulated market to try it.'
+                : 'Curves need weekly spend and outcomes. GenAI reads its own Google Ads, Meta, email and blog results automatically; import history for anything else from the Cards tab, or load the simulated market to try it.'
             }
           />
         ) : (

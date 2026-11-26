@@ -8,7 +8,7 @@ export default {
   out: './drizzle',
   dialect: 'postgresql',
   dbCredentials: {
-    url: process.env.DATABASE_URL || 'postgres://aurea:aurea@127.0.0.1:5432/aurea',
+    url: process.env.DATABASE_URL || 'postgres://genai:genai@127.0.0.1:5432/genai',
   },
   verbose: true,
   strict: false,

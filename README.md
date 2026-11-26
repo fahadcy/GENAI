@@ -1,8 +1,8 @@
-# Aurea
+# GenAI
 
 **One governed loop from brief to result.**
 
-Aurea is a GenAI marketing platform built to the *GenAI Marketing Automation*
+GenAI is a GenAI marketing platform built to the *GenAI Marketing Automation*
 product requirements (v1.0, August 2026). A campaign is generated, reviewed,
 approved, published and optimised inside one pipeline, with every step on a
 tamper-evident record.
@@ -24,7 +24,7 @@ npm run dev
 ```
 
 Open http://localhost:3000 and sign in with any seeded account
-(password `Aurea2026!`):
+(password `GenAI2026!`):
 
 | Email | Role | Lands on |
 | --- | --- | --- |
@@ -224,7 +224,7 @@ are worth fixing once:
 most Windows installs, and OneDrive tries to sync all ~40,000 files in
 `node_modules`. That slows every install and build, and locks files mid-operation
 so moves and deletes fail. Keep it somewhere OneDrive does not touch, e.g.
-`C:\dev\aurea`.
+`C:\dev\genai`.
 
 **Exclude the folder from Defender.** Real-time scanning inspects every file the
 build touches. In an elevated PowerShell:
@@ -383,7 +383,7 @@ local or national), then **Find competitors** and **Rescan and analyse**.
   customer pain points from low-star reviews, channel activity, threat score,
   change detection between scans, and **plays**. The AI agent writes positioning,
   competitive advantage and how to win, and must cite evidence ids.
-- **Into the rest of Aurea**: a "Use competitor intelligence" switch in Content
+- **Into the rest of GenAI**: a "Use competitor intelligence" switch in Content
   Studio and the Google Ads builder (stored with the brief/campaign as
   provenance); competitor brands become negative keywords; the guardrail flags
   copy naming a competitor or making a comparative claim (CAP Code 3.33–3.44).

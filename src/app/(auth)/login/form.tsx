@@ -38,7 +38,7 @@ export function LoginForm() {
           autoComplete="current-password"
           required
           placeholder="••••••••••"
-          defaultValue="Aurea2026!"
+          defaultValue="GenAI2026!"
         />
       </Field>
 

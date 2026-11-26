@@ -122,7 +122,7 @@ export function ChannelScorecard({
       ]),
     )
     const stamp = new Date().toISOString().slice(0, 10)
-    downloadCsv(`aurea-channel-scorecard-${rangeDays}d-${stamp}.csv`, csv)
+    downloadCsv(`genai-channel-scorecard-${rangeDays}d-${stamp}.csv`, csv)
   }
 
   return (

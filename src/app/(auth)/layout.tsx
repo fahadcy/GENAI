@@ -24,7 +24,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
             One governed loop from brief to result.
           </h1>
           <p className="mt-4 text-[15px] leading-relaxed text-ink-muted">
-            Point tools generate copy or schedule posts. Aurea is the connective tissue: a task is
+            Point tools generate copy or schedule posts. GenAI is the connective tissue: a task is
             generated, reviewed, approved, published and monitored without leaving the workspace —
             and every step is on the record.
           </p>

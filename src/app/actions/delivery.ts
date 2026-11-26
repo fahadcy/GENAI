@@ -52,7 +52,7 @@ export async function sendTestEmailAction(input: { to: string }): Promise<Action
       content: [
         {
           type: 'text/plain',
-          value: `This is a test from Aurea.\n\nIf you are reading it, SendGrid is working: the API key is valid, it has Mail Send permission, and ${from} is a verified sender.\n\nNo campaign was sent and nobody else received this.`,
+          value: `This is a test from GenAI.\n\nIf you are reading it, SendGrid is working: the API key is valid, it has Mail Send permission, and ${from} is a verified sender.\n\nNo campaign was sent and nobody else received this.`,
         },
       ],
       // A test must never be silently swallowed by a stale suppression entry —
@@ -110,7 +110,7 @@ export async function sendTestSmsAction(input: { to: string }): Promise<ActionRe
   const from = e.CLICKSEND_SENDER_ID
   const canReply = !from || /^\+?\d+$/.test(from)
   const body = withStopInstruction(
-    `Test message from ${auth.workspace.name} via Aurea. No campaign was sent.`,
+    `Test message from ${auth.workspace.name} via GenAI. No campaign was sent.`,
     canReply,
   ).slice(0, MAX_TEST_SMS)
 
@@ -119,7 +119,7 @@ export async function sendTestSmsAction(input: { to: string }): Promise<ActionRe
     method: 'POST',
     headers: { authorization: `Basic ${auth64}`, 'content-type': 'application/json' },
     body: JSON.stringify({
-      messages: [{ source: 'aurea', body, to, ...(from ? { from } : {}) }],
+      messages: [{ source: 'genai', body, to, ...(from ? { from } : {}) }],
     }),
     signal: AbortSignal.timeout(30_000),
   })

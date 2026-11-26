@@ -83,7 +83,7 @@ test('an unterminated quote does not throw', () => {
 test('the shipped .env.example parses to usable values', () => {
   // The exact file the user copies to .env.local — comments and all.
   const example = [
-    'DATABASE_URL="postgres://user:password@host:5432/aurea"',
+    'DATABASE_URL="postgres://user:password@host:5432/genai"',
     'AUTH_SECRET="change-me-to-a-long-random-string-min-24-chars"',
     'AI_PROVIDER="openai"          # openai | anthropic | mock',
     'OPENAI_API_KEY=""',

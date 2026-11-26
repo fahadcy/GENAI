@@ -28,7 +28,7 @@ import {
   setCardChannel,
   setDiscrepancyStatus,
   syncCard,
-  syncFromAurea,
+  syncFromGenAI,
   addSimulatedCard,
   updatePlanSettings,
 } from '@/lib/budget/service'
@@ -110,7 +110,7 @@ export async function createPlanAction(input: z.infer<typeof newPlanSchema>): Pr
     async (auth) => {
       const p = newPlanSchema.safeParse(input)
       if (!p.success) return { ok: false, message: p.error.issues[0]?.message ?? 'Check the form.' }
-      await syncFromAurea(auth.workspace.id).catch((e) => console.error('budget: sync before plan failed', e))
+      await syncFromGenAI(auth.workspace.id).catch((e) => console.error('budget: sync before plan failed', e))
       const plan = await createPlan({ workspaceId: auth.workspace.id, actorId: auth.user.id, ...p.data })
       if (p.data.simulate) await loadSimulation({ workspaceId: auth.workspace.id, actorId: auth.user.id, planId: plan.id })
       revalidate(plan.id)
@@ -257,7 +257,7 @@ export async function runAllocationAction(planId: string): Promise<ActionResult<
   return guard(
     'budget:plan',
     async (auth) => {
-      await syncFromAurea(auth.workspace.id).catch((e) => console.error('budget: sync failed', e))
+      await syncFromGenAI(auth.workspace.id).catch((e) => console.error('budget: sync failed', e))
       const run = await runAllocation({ workspaceId: auth.workspace.id, actorId: auth.user.id, planId })
       revalidate(planId)
       return { ok: true, message: run.result.summary.split('. ')[0] + '.', data: { id: run.id } }
@@ -314,7 +314,7 @@ export async function reconcileAction(planId: string): Promise<ActionResult> {
   return guard(
     'budget:plan',
     async (auth) => {
-      await syncFromAurea(auth.workspace.id).catch(() => undefined)
+      await syncFromGenAI(auth.workspace.id).catch(() => undefined)
       const r = await runReconciliation({ workspaceId: auth.workspace.id, actorId: auth.user.id, planId })
       revalidate(planId)
       const n = r.report.discrepancies.length

@@ -1,7 +1,7 @@
 /**
  * The video simulator.
  *
- * Aurea's connectors ship with simulators that validate payloads like the real
+ * GenAI's connectors ship with simulators that validate payloads like the real
  * API, enforce the real limits, and fail a small share of calls with retryable
  * errors so the retry and dead-letter paths are genuinely exercised rather
  * than merely present. This is that idea for video, with one addition that
@@ -166,7 +166,7 @@ export class SimulatorProvider implements VideoProvider {
   /* -------------------------------------------------------------- render */
 
   private async render(width: number, height: number, seconds: number, audio: boolean): Promise<Uint8Array> {
-    const dir = await mkdtemp(join(tmpdir(), 'aurea-video-sim-'))
+    const dir = await mkdtemp(join(tmpdir(), 'genai-video-sim-'))
     const out = join(dir, 'out.mp4')
     try {
       /**

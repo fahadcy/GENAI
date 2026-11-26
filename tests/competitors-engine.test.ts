@@ -339,7 +339,7 @@ describe('robots.txt and address safety', () => {
     assert.deepEqual(rules.sitemaps, ['https://n.co.uk/sitemap.xml'])
   })
   test('a group naming us takes priority', () => {
-    const r = parseRobots('User-agent: *\nAllow: /\n\nUser-agent: AureaBot\nDisallow: /')
+    const r = parseRobots('User-agent: *\nAllow: /\n\nUser-agent: GenAIBot\nDisallow: /')
     assert.ok(!robotsAllows(r, '/'))
   })
   test('private and metadata addresses are refused', () => {

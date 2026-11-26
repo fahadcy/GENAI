@@ -143,7 +143,7 @@ const schema = z.object({
   /**
    * TrueLayer Data API for reading a company card through UK Open Banking.
    * Live use needs an agency agreement under TrueLayer's AISP permission (or
-   * Aurea's own FCA registration) before TRUELAYER_ENV is set to live.
+   * GenAI's own FCA registration) before TRUELAYER_ENV is set to live.
    */
   TRUELAYER_CLIENT_ID: z.string().optional(),
   TRUELAYER_CLIENT_SECRET: z.string().optional(),

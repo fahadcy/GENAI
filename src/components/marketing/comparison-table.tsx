@@ -18,7 +18,7 @@ type Row = {
   note: string
   /** Same order as VENDORS. */
   values: [Level, Level, Level, Level, Level, Level]
-  aurea: Level
+  genai: Level
 }
 
 const ROWS: Row[] = [
@@ -26,49 +26,49 @@ const ROWS: Row[] = [
     capability: 'AI content generation',
     note: 'Drafting copy for a channel from a prompt or brief',
     values: ['partial', 'partial', 'partial', 'full', 'full', 'partial'],
-    aurea: 'full',
+    genai: 'full',
   },
   {
     capability: 'Brand and tone guardrails',
     note: 'Automatic scoring against a defined voice before review',
     values: ['none', 'none', 'none', 'full', 'partial', 'none'],
-    aurea: 'full',
+    genai: 'full',
   },
   {
     capability: 'Campaign planning',
     note: 'Objectives, budget and a sequenced multi-channel plan',
     values: ['full', 'full', 'full', 'none', 'none', 'partial'],
-    aurea: 'full',
+    genai: 'full',
   },
   {
     capability: 'AI audience targeting',
     note: 'Segments and lookalikes built from behaviour, not just lists',
     values: ['partial', 'full', 'full', 'none', 'none', 'none'],
-    aurea: 'full',
+    genai: 'full',
   },
   {
     capability: 'Cross-channel scheduling',
     note: 'One calendar covering email, social, ads and web',
     values: ['full', 'full', 'full', 'none', 'none', 'full'],
-    aurea: 'full',
+    genai: 'full',
   },
   {
     capability: 'Built-in approval workflow',
     note: 'Multi-step sign-off with roles, SLAs and an audit trail',
     values: ['partial', 'full', 'partial', 'none', 'none', 'full'],
-    aurea: 'full',
+    genai: 'full',
   },
   {
     capability: 'Live performance and auto-optimise',
     note: 'Results read back and acted on while the campaign runs',
     values: ['partial', 'partial', 'full', 'none', 'none', 'partial'],
-    aurea: 'full',
+    genai: 'full',
   },
   {
     capability: 'One governed end-to-end pipeline',
     note: 'Generate through monitor without leaving the workspace',
     values: ['none', 'none', 'none', 'none', 'none', 'none'],
-    aurea: 'full',
+    genai: 'full',
   },
 ]
 
@@ -114,7 +114,7 @@ export function ComparisonTable() {
       <div className="relative overflow-x-auto">
         <table className="w-full min-w-[820px] border-collapse text-left">
           <caption className="sr-only">
-            Capability comparison between Aurea and six representative marketing tools.
+            Capability comparison between GenAI and six representative marketing tools.
           </caption>
           <thead>
             <tr className="border-b border-line">
@@ -137,7 +137,7 @@ export function ComparisonTable() {
                 scope="col"
                 className="rounded-t-lg border-x border-brand-200 bg-brand-50 px-3 py-4 text-center text-[12px] font-semibold text-brand-700"
               >
-                Aurea
+                GenAI
               </th>
             </tr>
           </thead>
@@ -177,7 +177,7 @@ export function ComparisonTable() {
                       last && 'rounded-b-lg border-b',
                     )}
                   >
-                    <Cell level={row.aurea} emphasis />
+                    <Cell level={row.genai} emphasis />
                   </td>
                 </tr>
               )

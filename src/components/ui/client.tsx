@@ -255,7 +255,7 @@ export function ThemeToggle({ className }: { className?: string }) {
     setTheme(next)
     document.documentElement.dataset.theme = next
     try {
-      localStorage.setItem('aurea-theme', next)
+      localStorage.setItem('genai-theme', next)
     } catch {
       /* private mode — the choice just won't persist */
     }
@@ -278,7 +278,7 @@ export function ThemeToggle({ className }: { className?: string }) {
 
 function readTheme(): 'light' | 'dark' {
   try {
-    const stored = localStorage.getItem('aurea-theme')
+    const stored = localStorage.getItem('genai-theme')
     if (stored === 'dark' || stored === 'light') return stored
   } catch {
     /* ignore */
@@ -287,7 +287,7 @@ function readTheme(): 'light' | 'dark' {
 }
 
 /** Applied before paint so there is no light flash on a dark-theme load. */
-export const THEME_SCRIPT = `(function(){try{var t=localStorage.getItem('aurea-theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t}catch(e){}})()`
+export const THEME_SCRIPT = `(function(){try{var t=localStorage.getItem('genai-theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t}catch(e){}})()`
 
 /* --------------------------------------------------------- Confirm button */
 

@@ -5,7 +5,7 @@ import { workspaces } from '@/lib/db/schema'
 import { budgetTick } from '@/lib/budget/service'
 
 /**
- * Budget refresh: pull Aurea's own spend, sync connected cards (at most every
+ * Budget refresh: pull GenAI's own spend, sync connected cards (at most every
  * six hours each), and reconcile every live plan. New high-severity
  * discrepancies notify owners and marketing ops.
  *

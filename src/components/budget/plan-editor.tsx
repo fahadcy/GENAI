@@ -310,7 +310,7 @@ function LineModal({
           </label>
         </div>
         {(opt?.category === 'paid_media' || key === 'google_ads') && campaigns.length > 0 && (
-          <Field label="Aurea Google Ads campaigns this line pays for" hint="Pacing uses their daily budgets for the worst case, and a live plan can set their daily budgets.">
+          <Field label="GenAI Google Ads campaigns this line pays for" hint="Pacing uses their daily budgets for the worst case, and a live plan can set their daily budgets.">
             <div className="max-h-40 space-y-1 overflow-y-auto rounded-lg border border-line p-2">
               {campaigns.map((c) => (
                 <label key={c.id} className="flex items-center gap-2 text-[13px] text-ink">

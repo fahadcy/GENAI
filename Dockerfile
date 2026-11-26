@@ -1,4 +1,4 @@
-# Aurea — production image.
+# GenAI — production image.
 #
 # Three stages that matter:
 #   builder — compiles the app

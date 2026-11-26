@@ -1,8 +1,8 @@
 {
-  "name": "aurea",
+  "name": "genai",
   "version": "1.0.0",
   "private": true,
-  "description": "Aurea \u2014 one governed loop from brief to result. GenAI marketing automation platform.",
+  "description": "GenAI \u2014 one governed loop from brief to result. GenAI marketing automation platform.",
   "scripts": {
     "dev": "next dev -p 3000",
     "build": "next build",

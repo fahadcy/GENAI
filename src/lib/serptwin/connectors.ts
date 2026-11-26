@@ -4,7 +4,7 @@ import type { AdAssetRow, AuctionRow, MatchType, OrganicRow, SearchTermRow } fro
  * Live data mapping.
  *
  * The engines take plain rows; these are the queries that fetch them and the
- * pure functions that turn API responses into rows. Aurea already has a
+ * pure functions that turn API responses into rows. GenAI already has a
  * version-pinned Google Ads REST client with a GAQL `search` method (see the
  * platform handover); these plug into it. Search Console needs one OAuth
  * scope, `https://www.googleapis.com/auth/webmasters.readonly`.

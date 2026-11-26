@@ -4,14 +4,14 @@ import { ToastProvider, THEME_SCRIPT } from '@/components/ui/client'
 
 export const metadata: Metadata = {
   title: {
-    default: 'Aurea — one governed loop from brief to result',
-    template: '%s · Aurea',
+    default: 'GenAI — one governed loop from brief to result',
+    template: '%s · GenAI',
   },
   description:
-    'Aurea is the GenAI marketing platform where a campaign is generated, reviewed, approved, published and optimised in one governed pipeline — with a full audit trail.',
-  applicationName: 'Aurea',
+    'GenAI is the GenAI marketing platform where a campaign is generated, reviewed, approved, published and optimised in one governed pipeline — with a full audit trail.',
+  applicationName: 'GenAI',
   openGraph: {
-    title: 'Aurea — one governed loop from brief to result',
+    title: 'GenAI — one governed loop from brief to result',
     description:
       'Generate, review, approve, publish and optimise campaigns in one governed pipeline.',
     type: 'website',

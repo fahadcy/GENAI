@@ -124,5 +124,5 @@ async function workspaceName(workspaceId: string): Promise<string> {
     .from(workspaces)
     .where(eq(workspaces.id, workspaceId))
     .limit(1)
-  return row?.name ?? 'Aurea'
+  return row?.name ?? 'GenAI'
 }

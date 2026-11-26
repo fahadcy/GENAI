@@ -119,7 +119,7 @@ export function AudienceBuilder({
     <Card className="overflow-hidden">
       <CardHeader
         title="Describe your audience"
-        description="Write it the way you would brief a colleague. Aurea turns it into rules you can inspect and edit before anything is saved."
+        description="Write it the way you would brief a colleague. GenAI turns it into rules you can inspect and edit before anything is saved."
         icon={<Sparkles className="h-4 w-4 text-brand-600" />}
         actions={draft?.simulated ? <Badge tone="neutral">Simulated model</Badge> : undefined}
       />

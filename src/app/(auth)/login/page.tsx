@@ -11,7 +11,7 @@ export default async function LoginPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-semibold tracking-tight text-ink">Sign in to Aurea</h1>
+      <h1 className="text-2xl font-semibold tracking-tight text-ink">Sign in to GenAI</h1>
       <p className="mt-1.5 text-[14px] text-ink-muted">
         New here?{' '}
         <Link href="/signup" className="font-medium text-brand-600 hover:underline">
@@ -49,7 +49,7 @@ function DemoAccounts() {
       <p className="text-[13px] font-semibold text-ink">Demo accounts</p>
       <p className="mt-0.5 text-xs text-ink-muted">
         All use the password{' '}
-        <code className="rounded bg-bg-inset px-1.5 py-0.5 font-mono text-[11px] text-ink">Aurea2026!</code>
+        <code className="rounded bg-bg-inset px-1.5 py-0.5 font-mono text-[11px] text-ink">GenAI2026!</code>
       </p>
       <ul className="mt-3 space-y-1.5">
         {accounts.map((a) => (

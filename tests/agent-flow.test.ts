@@ -1,7 +1,7 @@
 /**
- * The growth agent inside Aurea, against the real database: connecting the
+ * The growth agent inside GenAI, against the real database: connecting the
  * CRM (token tested, then stored encrypted), settings, the brain built from
- * what Aurea already knows, runs stored whole and metered and audited, the
+ * what GenAI already knows, runs stored whole and metered and audited, the
  * one-run-at-a-time lock, crash recovery, the schedule, and permissions.
  * The CRM itself is a fake; the CRM's own API is tested in the CRM codebase.
  */
@@ -42,7 +42,7 @@ function fakeDeps(crm = new FakeCrm()) {
   return { crm, ch: null, site: null, model: new SimulatedModel(), businessId: 1, petitions: async () => [] }
 }
 
-describe('growth agent in Aurea', () => {
+describe('growth agent in GenAI', () => {
   let fx: Fixture
   before(async () => { fx = await createWorkspace() })
   after(async () => { await destroyWorkspace(fx) })

@@ -1,5 +1,5 @@
 /**
- * Aurea — data model.
+ * GenAI — data model.
  *
  * Design notes
  * ------------
@@ -1233,7 +1233,7 @@ export const socialAccounts = pgTable(
 
     /** linkedin | facebook */
     provider: varchar('provider', { length: 32 }).notNull(),
-    /** The Aurea channel this publishes to: linkedin | facebook. */
+    /** The GenAI channel this publishes to: linkedin | facebook. */
     channel: varchar('channel', { length: 32 }).notNull(),
 
     /**
@@ -1830,7 +1830,7 @@ export const budgetLines = pgTable(
     /** Share of reported outcomes that are incremental, and where that number came from. */
     incrementality: real('incrementality').notNull().default(1),
     incrementalitySource: text('incrementality_source'),
-    /** Aurea Google Ads campaigns this line pays for. */
+    /** GenAI Google Ads campaigns this line pays for. */
     adCampaignIds: jsonb('ad_campaign_ids').$type<string[]>().notNull().default([]),
     ownerId: uuid('owner_id').references(() => users.id),
     sort: integer('sort').notNull().default(0),
@@ -1855,7 +1855,7 @@ export const budgetObservations = pgTable(
     spendPence: bigint('spend_pence', { mode: 'number' }).notNull().default(0),
     conversions: real('conversions').notNull().default(0),
     revenuePence: bigint('revenue_pence', { mode: 'number' }).notNull().default(0),
-    /** aurea | platform | statement | manual | simulated */
+    /** genai | platform | statement | manual | simulated */
     source: varchar('source', { length: 16 }).notNull(),
     updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
   },
@@ -1912,7 +1912,7 @@ export const budgetAllocations = pgTable(
 
 /**
  * A payment card connected to the budget. Never a card number: last four
- * digits and the provider's own reference only, so Aurea stays out of PCI DSS
+ * digits and the provider's own reference only, so GenAI stays out of PCI DSS
  * scope. Tokens and keys are encrypted (crypto-secrets) in credentialRef.
  */
 export const paymentCards = pgTable(
@@ -1950,7 +1950,7 @@ export const paymentCards = pgTable(
   ],
 )
 
-/** Card transactions, normalised and classified. Deduplicated on Aurea's own key. */
+/** Card transactions, normalised and classified. Deduplicated on GenAI's own key. */
 export const cardTransactions = pgTable(
   'card_transactions',
   {

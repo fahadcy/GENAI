@@ -2,7 +2,7 @@
  * Competitive context for the generators.
  *
  * This is where competitor intelligence stops being a report and starts
- * changing what Aurea writes. The content agent, the Google Ads agent and the
+ * changing what GenAI writes. The content agent, the Google Ads agent and the
  * video brief all receive the same block, cut from the latest landscape:
  * the promises every competitor already makes (so the copy does not sound the
  * same), the angles nobody owns, what competitors' customers complain about,

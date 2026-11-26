@@ -45,7 +45,7 @@ export function videoStorageKey(workspaceId: string, generationId: string, versi
 /* ------------------------------------------------------------ local store */
 
 function localRoot(): string {
-  return resolve(process.env.VIDEO_LOCAL_STORE_DIR || '.aurea-video-store')
+  return resolve(process.env.VIDEO_LOCAL_STORE_DIR || '.genai-video-store')
 }
 
 function localPath(key: string): string {

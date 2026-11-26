@@ -84,7 +84,7 @@ export function buildVideoPrompt(input: {
   const scene = references.find((r) => r.kind === 'scene')
 
   const lines = [
-    'Aurea Director Prompt',
+    'GenAI Director Prompt',
     `Title: ${input.title.trim() || 'Untitled clip'}`,
     `Format: ${input.durationSeconds}s ${input.aspectRatio} for ${input.channel}.`,
     `Creative mode: ${modeLine(mode, Boolean(speaker), Boolean(product))}.`,

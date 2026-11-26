@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 /*
- * Aurea tokens.
+ * GenAI tokens.
  * Light is the base; dark overrides only what changes. Every colour used in the
  * product resolves through one of these, so re-skinning for a white-label
  * deployment is a single block of overrides.

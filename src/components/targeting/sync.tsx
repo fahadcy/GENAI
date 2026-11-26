@@ -140,7 +140,7 @@ export function SyncPanel({
       {blocked ? (
         <p className="px-5 py-6 text-center text-[13px] leading-relaxed text-ink-faint">
           This segment has no sync targets. Pick the channels it should be pushed to and save — nothing
-          leaves Aurea until you do.
+          leaves GenAI until you do.
         </p>
       ) : (
         <ul className="divide-y divide-line">

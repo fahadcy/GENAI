@@ -227,7 +227,7 @@ export type Engine = 'overlap' | 'genome' | 'transfer' | 'drift' | 'leads' | 'ca
 export type Confidence = 'measured' | 'estimated' | 'hypothesis'
 
 export interface ProposedAction {
-  /** Machine-readable verb the Aurea worker understands. */
+  /** Machine-readable verb the GenAI worker understands. */
   kind:
     | 'start_pause_experiment'
     | 'add_negative_keywords'

@@ -44,7 +44,7 @@ export function LoopDiagram({ className }: { className?: string }) {
           role="img"
           aria-labelledby="loop-title loop-desc"
         >
-          <title id="loop-title">The Aurea pipeline</title>
+          <title id="loop-title">The GenAI pipeline</title>
           <desc id="loop-desc">
             Five stages in sequence — generate, review, approve, publish, monitor — with a feedback
             arc returning from monitor to generate, so measured results become the next brief.

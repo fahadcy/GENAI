@@ -225,7 +225,7 @@ export function VideoComposer({
 
         <Field
           label="What should the clip show?"
-          hint="One sentence is enough. Aurea turns it into a timed director prompt before anything is generated."
+          hint="One sentence is enough. GenAI turns it into a timed director prompt before anything is generated."
           required
         >
           <Textarea
@@ -607,7 +607,7 @@ function ReferenceFields({
         rows={compact ? 2 : 3}
         value={instruction}
         onChange={(e) => onInstruction(e.target.value)}
-        placeholder="How should Aurea use this image?"
+        placeholder="How should GenAI use this image?"
       />
     </div>
   )

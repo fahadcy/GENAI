@@ -26,7 +26,7 @@ import { brainGaps, type BusinessBrain, type Fact, type Service } from './brain'
 import { londonDayHour } from './outreach/gate'
 
 /**
- * The growth agent inside Aurea: one connection per workspace, runs stored
+ * The growth agent inside GenAI: one connection per workspace, runs stored
  * whole, metered like every other model call, written to the audit trail,
  * and scheduled from the worker.
  *
@@ -277,7 +277,7 @@ export const ANSWER_KEYS = ['idealCustomer', 'capacityPerMonth', 'monthlyGoal', 
 export type AnswerKey = (typeof ANSWER_KEYS)[number]
 
 /**
- * The brain from what Aurea already knows: the CRM's business record, the
+ * The brain from what GenAI already knows: the CRM's business record, the
  * PPC & SEO business setup (services, capacity, areas), the competitor
  * profile, and anything a person has told the agent directly (owner facts,
  * which outrank everything else).

@@ -8,7 +8,7 @@
 # restart in a loop after it finishes.
 
 x-app-env: &app-env
-  DATABASE_URL: postgres://aurea:aurea@db:5432/aurea
+  DATABASE_URL: postgres://genai:genai@db:5432/genai
   AUTH_SECRET: ${AUTH_SECRET:-local-development-secret-change-me-please}
   AI_PROVIDER: ${AI_PROVIDER:-openai}
   OPENAI_API_KEY: ${OPENAI_API_KEY:-}
@@ -20,15 +20,15 @@ services:
   db:
     image: postgres:16-alpine
     environment:
-      POSTGRES_USER: aurea
-      POSTGRES_PASSWORD: aurea
-      POSTGRES_DB: aurea
+      POSTGRES_USER: genai
+      POSTGRES_PASSWORD: genai
+      POSTGRES_DB: genai
     ports:
       - '5432:5432'
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: ['CMD-SHELL', 'pg_isready -U aurea -d aurea']
+      test: ['CMD-SHELL', 'pg_isready -U genai -d genai']
       interval: 5s
       timeout: 3s
       retries: 12

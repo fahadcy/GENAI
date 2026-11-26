@@ -10,7 +10,7 @@ import { jsonRequest } from './http'
  * payment at the card (research §2, "route B"). Airwallex was chosen over
  * Stripe Issuing because the customer uses their own Airwallex account and
  * API key — issuing cards *to* customers through Stripe Connect would make
- * Aurea a card-programme platform with the compliance that brings — and over
+ * GenAI a card-programme platform with the compliance that brings — and over
  * Revolut because its API key login is a plain key, not a signed JWT.
  * Airwallex also holds USD balances, which removes the FX fee on
  * dollar-billed ad accounts.
@@ -122,7 +122,7 @@ export async function airwallexSetMonthlyLimit(
 }
 
 /**
- * Map Airwallex transactions to Aurea's shape. Clearings are settled charges,
+ * Map Airwallex transactions to GenAI's shape. Clearings are settled charges,
  * refunds are money back, authorisations still open are pending, reversals
  * and declines are not money moving at all.
  */

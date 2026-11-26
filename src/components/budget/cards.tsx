@@ -100,7 +100,7 @@ export function CardsPanel({
         <CardHeader
           icon={<CreditCard className="h-4 w-4" />}
           title="Cards"
-          description="Aurea never sees or stores a card number — last four digits and the provider’s reference only. Read-only cards are monitored; issued cards (Airwallex) can also be capped per line."
+          description="GenAI never sees or stores a card number — last four digits and the provider’s reference only. Read-only cards are monitored; issued cards (Airwallex) can also be capped per line."
         />
         {cards.length === 0 ? (
           <EmptyState icon={<CreditCard className="h-5 w-5" />} title="No card connected" description="Connect one of the ways below. A statement CSV works with every bank and card." />
@@ -155,7 +155,7 @@ export function CardsPanel({
                       size="xs"
                       variant="ghost"
                       title={`Disconnect ${c.label}?`}
-                      description="Its transactions are deleted from Aurea. For Open Banking, also revoke access at your bank."
+                      description="Its transactions are deleted from GenAI. For Open Banking, also revoke access at your bank."
                       confirmLabel="Disconnect"
                       onConfirm={async () => {
                         await run(`rm:${c.id}`, () => removeCardAction(c.id))
@@ -218,7 +218,7 @@ export function CardsPanel({
         )}
         {canPlan && (
           <div className="flex flex-wrap items-center justify-between gap-2 border-t border-line px-5 py-3">
-            <p className="text-xs text-ink-muted">Channel history for lines Aurea cannot see (events, print, an agency’s channels) gives them response curves too.</p>
+            <p className="text-xs text-ink-muted">Channel history for lines GenAI cannot see (events, print, an agency’s channels) gives them response curves too.</p>
             <Button size="xs" variant="ghost" onClick={() => setModal('history')}>
               <History className="h-3 w-3" /> Import channel history
             </Button>
@@ -229,7 +229,7 @@ export function CardsPanel({
       <Card>
         <CardHeader
           title="Transactions"
-          description="Every charge, classified from its descriptor. Google prints the paying account’s id; others are matched by platform. Teach Aurea a merchant once and future charges follow."
+          description="Every charge, classified from its descriptor. Google prints the paying account’s id; others are matched by platform. Teach GenAI a merchant once and future charges follow."
           actions={
             <div className="flex gap-1">
               {(['all', 'unassigned'] as const).map((f) => (
@@ -597,7 +597,7 @@ function HistoryModal({ open, onClose }: { open: boolean; onClose: () => void })
       open={open}
       onClose={onClose}
       title="Import channel history"
-      description="One row per week (or day) per channel: week, channel, spend, conversions, revenue. Channel names match the budget line names. Imported history takes priority over Aurea’s own numbers for the same weeks."
+      description="One row per week (or day) per channel: week, channel, spend, conversions, revenue. Channel names match the budget line names. Imported history takes priority over GenAI’s own numbers for the same weeks."
       footer={
         <>
           <Button size="sm" variant="ghost" onClick={onClose}>

@@ -15,7 +15,7 @@
  *    server (the Competitors review found exactly that class of bug).
  *  - Any run of 12–19 digits in a descriptor is masked before it is stored. A
  *    statement export occasionally carries a full card number in the narrative;
- *    storing it would pull Aurea into PCI DSS scope for no benefit.
+ *    storing it would pull GenAI into PCI DSS scope for no benefit.
  */
 import { createHash } from 'node:crypto'
 import { CHANNELS } from './channels'

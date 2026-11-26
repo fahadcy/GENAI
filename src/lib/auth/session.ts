@@ -8,7 +8,7 @@ import { db } from '@/lib/db'
 import { memberships, sessions, users, workspaces } from '@/lib/db/schema'
 import type { Role, Workspace } from '@/lib/db/schema'
 
-const COOKIE = 'aurea_session'
+const COOKIE = 'genai_session'
 const TTL_DAYS = 30
 
 export type SessionUser = {

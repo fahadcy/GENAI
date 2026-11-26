@@ -1,7 +1,7 @@
 import { cn } from '@/lib/cn'
 
 /**
- * The Aurea mark: five nodes on a loop, one of them a gate. It is a literal
+ * The GenAI mark: five nodes on a loop, one of them a gate. It is a literal
  * drawing of the product's argument — generate, review, approve, publish,
  * monitor, feeding back to the start.
  */
@@ -42,7 +42,7 @@ export function Wordmark({
   return (
     <span className={cn('inline-flex items-center gap-2', className)}>
       <Logomark size={marks[size]} />
-      <span className={cn('font-semibold tracking-tight text-ink', sizes[size])}>Aurea</span>
+      <span className={cn('font-semibold tracking-tight text-ink', sizes[size])}>GenAI</span>
     </span>
   )
 }
