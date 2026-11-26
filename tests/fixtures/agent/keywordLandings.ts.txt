@@ -1,0 +1,229 @@
+export type KeywordFaq = {
+  question: string;
+  answer: string;
+};
+
+export type KeywordLanding = {
+  slug: string;
+  title: string;
+  description: string;
+  keyword: string;
+  h1: string;
+  intro: string;
+  points: string[];
+  paragraphs: string[];
+  faqs: KeywordFaq[];
+};
+
+export const keywordLandings: KeywordLanding[] = [
+  {
+    slug: "insolvency-practitioner",
+    keyword: "insolvency practitioner",
+    title: "Insolvency Practitioner",
+    description:
+      "Speak to a licensed insolvency practitioner about closing an insolvent limited company. Free, confidential advice from £1,499.",
+    h1: "Speak to a Licensed Insolvency Practitioner",
+    intro:
+      "If your company cannot pay its debts, a licensed insolvency practitioner is the person who can formally close it. Easy Liquidation is led by a practitioner regulated by the Insolvency Practitioners Association, with advice from £1,499.",
+    points: [
+      "Licensed insolvency practitioner, regulated by the IPA",
+      "Free, confidential advice before you instruct anyone",
+      "Fixed-fee company closures from £1,499",
+    ],
+    paragraphs: [
+      "Only a licensed insolvency practitioner can be appointed to liquidate a limited company. Directors often reach that point after creditor pressure, HMRC arrears, or a Bounce Back Loan that the company cannot repay. Informal strike-off is not the right route when the company is insolvent.",
+      "At Easy Liquidation you speak to the practitioner’s team first, with no obligation. We explain whether a creditors’ voluntary liquidation is appropriate, what it means for you personally, and what happens to company debts once a liquidator is appointed.",
+    ],
+    faqs: [
+      {
+        question: "What does an insolvency practitioner do?",
+        answer:
+          "An insolvency practitioner takes control of an insolvent company, deals with creditors, realises assets, and closes the company through a formal process such as liquidation. Directors no longer have to manage creditor calls once the insolvency practitioner is appointed.",
+      },
+      {
+        question: "When should I contact an insolvency practitioner?",
+        answer:
+          "Contact an insolvency practitioner as soon as you know the company cannot pay its debts as they fall due, or if HMRC, a lender, or another creditor is threatening recovery action. Early advice from an insolvency practitioner protects your position as a director.",
+      },
+      {
+        question: "How much does an insolvency practitioner charge?",
+        answer:
+          "Easy Liquidation offers a hassle-free closure with a licensed insolvency practitioner from £1,499. You get a clear quote before you instruct us, so you know the cost of appointing an insolvency practitioner up front.",
+      },
+      {
+        question: "Can I choose my own insolvency practitioner?",
+        answer:
+          "Yes. In a creditors’ voluntary liquidation the directors nominate the insolvency practitioner. You are free to choose a licensed insolvency practitioner such as Easy Liquidation rather than waiting for a creditor to force the company into compulsory liquidation.",
+      },
+    ],
+  },
+  {
+    slug: "company-liquidation",
+    keyword: "company liquidation",
+    title: "Company Liquidation",
+    description:
+      "Company liquidation for insolvent limited companies, from £1,499. Licensed practitioners, confidential advice, and creditor pressure brought to an end.",
+    h1: "Company Liquidation from £1,499",
+    intro:
+      "Company liquidation is the formal way to close a limited company that cannot pay its debts. We handle the company liquidation for you, from the first call through to dealing with creditors, from £1,499.",
+    points: [
+      "Company liquidation led by a licensed practitioner",
+      "Creditor pressure passed to the liquidator",
+      "Clear fees, with company liquidation from £1,499",
+    ],
+    paragraphs: [
+      "Company liquidation brings the company’s affairs to an end. A liquidator collects what is owed to the company, sells assets, and distributes what is available to creditors. Debts the company cannot pay, including many Bounce Back Loans, are then written off with the company.",
+      "Directors stay in control of the timing by choosing company liquidation themselves, rather than waiting for a winding-up petition. We explain the company liquidation steps in plain language before you decide.",
+    ],
+    faqs: [
+      {
+        question: "What is company liquidation?",
+        answer:
+          "Company liquidation is a legal process that closes a limited company. A licensed liquidator takes over, deals with creditors and assets, and brings the company to an end. Company liquidation is the usual route when the company is insolvent and strike-off is not available.",
+      },
+      {
+        question: "How long does company liquidation take?",
+        answer:
+          "The appointment itself can be arranged quickly once you have instructed us. The full company liquidation then continues in the background while the liquidator deals with creditors, assets, and statutory reporting. You do not have to manage that day to day.",
+      },
+      {
+        question: "Will company liquidation affect me personally?",
+        answer:
+          "A limited company is a separate legal entity, so company liquidation does not automatically make you liable for its debts. Personal guarantees, an overdrawn director’s loan, or misconduct can still create personal exposure, which is why we review that before company liquidation starts.",
+      },
+      {
+        question: "How much does company liquidation cost?",
+        answer:
+          "Company liquidation with Easy Liquidation starts from £1,499. The quote covers the work of a licensed practitioner and is explained before you commit to company liquidation.",
+      },
+    ],
+  },
+  {
+    slug: "company-insolvency",
+    keyword: "company insolvency",
+    title: "Company Insolvency",
+    description:
+      "Company insolvency advice for directors who cannot pay creditors, HMRC, or a Bounce Back Loan. Confidential guidance from a licensed practitioner.",
+    h1: "Company Insolvency Advice for Directors",
+    intro:
+      "Company insolvency means the company cannot pay its debts when they fall due, or its liabilities are greater than its assets. If that describes your business, take company insolvency advice before the position gets worse.",
+    points: [
+      "Plain-English company insolvency advice",
+      "Help with HMRC, creditors, and Bounce Back Loans",
+      "A formal closure route when company insolvency is confirmed",
+    ],
+    paragraphs: [
+      "Company insolvency changes a director’s duties. Once you know the company is insolvent, you must put creditors’ interests first and avoid taking on new debts the company cannot pay. Speaking to a licensed practitioner is the practical first step.",
+      "Not every company insolvency ends the same way. Where the business cannot continue, a creditors’ voluntary liquidation is often the cleanest close. We will tell you honestly if company insolvency advice points to a different option.",
+    ],
+    faqs: [
+      {
+        question: "What are the signs of company insolvency?",
+        answer:
+          "Typical signs of company insolvency are unpaid HMRC, creditors chasing payment, maxed-out facilities, and wages or suppliers you cannot cover. If the company cannot pay debts as they fall due, treat that as company insolvency and get advice immediately.",
+      },
+      {
+        question: "What should directors do in company insolvency?",
+        answer:
+          "Stop incurring further credit, keep records, and take company insolvency advice from a licensed insolvency practitioner. Acting promptly in company insolvency reduces the risk of personal criticism later.",
+      },
+      {
+        question: "Does company insolvency mean I lose my home?",
+        answer:
+          "Company insolvency does not by itself put your home at risk, because the company is a separate legal person. A personal guarantee or an overdrawn director’s loan can change that, so we look at those points as part of company insolvency advice.",
+      },
+      {
+        question: "Can company insolvency write off a Bounce Back Loan?",
+        answer:
+          "If the company cannot repay a Bounce Back Loan, strike-off is not suitable. Formal closure after company insolvency is the route that deals with the loan. Any balance left at the end of the liquidation is written off with the company, not chased from you personally unless a separate guarantee applies.",
+      },
+    ],
+  },
+  {
+    slug: "creditors-voluntary-liquidation",
+    keyword: "creditors voluntary liquidation",
+    title: "Creditors Voluntary Liquidation",
+    description:
+      "Creditors voluntary liquidation (CVL) for insolvent companies. Directors choose the liquidator and stop creditor pressure. Fees from £1,499.",
+    h1: "Creditors Voluntary Liquidation from £1,499",
+    intro:
+      "A creditors voluntary liquidation is the director-led way to close an insolvent limited company. You choose the liquidator, creditor action is brought under control, and the company is wound up properly.",
+    points: [
+      "Directors start the creditors voluntary liquidation",
+      "Creditor pressure handled by the liquidator",
+      "Creditors voluntary liquidation fees from £1,499",
+    ],
+    paragraphs: [
+      "Creditors voluntary liquidation is used when the company cannot pay its debts and there is no realistic rescue. It is different from compulsory liquidation, where a creditor uses the court. In a creditors voluntary liquidation you stay in control of who is appointed and when the process starts.",
+      "Once creditors voluntary liquidation begins, the liquidator writes to creditors, deals with assets, and completes the statutory work. Directors can then focus on what comes next, including a new venture where the law allows it.",
+    ],
+    faqs: [
+      {
+        question: "What is a creditors voluntary liquidation?",
+        answer:
+          "A creditors voluntary liquidation is a formal insolvency procedure started by the directors of a company that cannot pay its debts. A licensed insolvency practitioner is appointed as liquidator and closes the company.",
+      },
+      {
+        question: "Who can start a creditors voluntary liquidation?",
+        answer:
+          "The directors and shareholders start a creditors voluntary liquidation. You do not have to wait for a creditor to petition the court. Choosing creditors voluntary liquidation yourself is usually calmer and faster than compulsory liquidation.",
+      },
+      {
+        question:
+          "Will a creditors voluntary liquidation make me liable for company debts?",
+        answer:
+          "No, not if you have acted properly and have not given a personal guarantee. In a creditors voluntary liquidation the company, not the director, is the debtor. Guarantees and overdrawn loan accounts are reviewed before the creditors voluntary liquidation is agreed.",
+      },
+      {
+        question: "How much is a creditors voluntary liquidation?",
+        answer:
+          "A creditors voluntary liquidation with Easy Liquidation starts from £1,499. We confirm the fee before you sign anything, so the cost of the creditors voluntary liquidation is clear.",
+      },
+    ],
+  },
+  {
+    slug: "easy-liquidation",
+    keyword: "easy liquidation",
+    title: "Easy Liquidation",
+    description:
+      "Easy Liquidation closes insolvent limited companies from £1,499. Licensed insolvency practitioners, confidential advice, and a straightforward process.",
+    h1: "Easy Liquidation for Limited Companies",
+    intro:
+      "Easy Liquidation is a straightforward way to close an insolvent limited company. You get a licensed practitioner, a named team, and a fixed starting fee of £1,499.",
+    points: [
+      "Easy Liquidation from £1,499",
+      "More than 30 years of insolvency experience",
+      "Confidential from the first conversation",
+    ],
+    paragraphs: [
+      "Easy Liquidation is a trading style of Currie Young Limited. Steven John Currie is licensed to act as an insolvency practitioner in the UK by the Insolvency Practitioners Association. That licence is what allows Easy Liquidation to be appointed over a company.",
+      "Directors use Easy Liquidation when creditor calls, HMRC, or an unpaid Bounce Back Loan have become unmanageable. We explain the options, and if liquidation is right we run it for you.",
+    ],
+    faqs: [
+      {
+        question: "What is Easy Liquidation?",
+        answer:
+          "Easy Liquidation is a company closure service for insolvent limited companies. Easy Liquidation is a trading style of Currie Young Limited, and the work is carried out by a licensed insolvency practitioner.",
+      },
+      {
+        question: "How does Easy Liquidation start?",
+        answer:
+          "Call, send a WhatsApp message, or complete the form. Easy Liquidation will ask about debts, assets, and any personal guarantees, then tell you whether liquidation is the right next step. There is no fee for that first conversation.",
+      },
+      {
+        question: "How much does Easy Liquidation cost?",
+        answer:
+          "Easy Liquidation starts from £1,499. You receive the figure before you instruct us, with no obligation to go ahead.",
+      },
+      {
+        question: "Is Easy Liquidation confidential?",
+        answer:
+          "Yes. The first conversation with Easy Liquidation is confidential. Creditors are only contacted once you have instructed us and the liquidation is under way.",
+      },
+    ],
+  },
+];
+
+export function getKeywordLanding(slug: string) {
+  return keywordLandings.find((page) => page.slug === slug);
+}

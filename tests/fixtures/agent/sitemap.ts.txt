@@ -1,0 +1,40 @@
+import type { MetadataRoute } from "next";
+import { blogPosts } from "@/lib/blogData";
+
+const baseUrl = "https://easyliquidation.co.uk";
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  const staticRoutes = [
+    "/",
+    "/about-us",
+    "/about-us/how-we-work",
+    "/services",
+    "/services/creditors-voluntary-liquidation",
+    "/services/members-voluntary-liquidation",
+    "/services/bounce-back-loans",
+    "/calculator",
+    "/faq",
+    "/blog",
+    "/contact",
+    "/do-i-need-to-liquidate-my-company",
+    "/what-are-the-benefits-of-a-cvl",
+    "/what-happens-next",
+    "/insolvency-practitioner",
+    "/company-liquidation",
+    "/company-insolvency",
+    "/creditors-voluntary-liquidation",
+    "/easy-liquidation",
+  ];
+
+  const staticEntries = staticRoutes.map((route) => ({
+    url: `${baseUrl}${route}`,
+    lastModified: new Date(),
+  }));
+
+  const blogEntries = blogPosts.map((post) => ({
+    url: `${baseUrl}/blog/${post.slug}`,
+    lastModified: new Date(),
+  }));
+
+  return [...staticEntries, ...blogEntries];
+}

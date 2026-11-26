@@ -1,0 +1,401 @@
+'use client'
+
+import * as React from 'react'
+import { useRouter } from 'next/navigation'
+import { Check, RefreshCw, Send, ShieldCheck, TriangleAlert, X } from 'lucide-react'
+import { Badge, Button, Card, Field, Textarea } from '@/components/ui/primitives'
+import { useToast } from '@/components/ui/client'
+import { ScoreReport } from '@/components/governance/score-report'
+import { decideAction } from '@/app/actions/approvals'
+import { replayVideoAction, submitVideoForReviewAction } from '@/app/actions/video'
+import type {
+  GuardrailFinding,
+  ScoreDetail,
+  ToneAxis,
+  VideoMediaFacts,
+  VideoProvenance,
+  VideoReferenceAsset,
+} from '@/lib/db/schema'
+
+/**
+ * The clip's own screen: what an author looks at after generating, and what a
+ * reviewer decides on.
+ *
+ * The organising idea is to separate what the machine checked from what only a
+ * person can judge, and to say which is which. A reviewer who believes the
+ * platform has already assessed whether the footage is any good will approve
+ * things nobody looked at — so the machine results are labelled as mechanical,
+ * and the decision carries the sentence that makes the reviewer's job explicit.
+ */
+
+const money = (cents: number) => `$${(cents / 100).toFixed(2)}`
+/** Bytes at a scale that suits the number: a 44KB clip is not "0.0 MB". */
+const size = (bytes: number) =>
+  bytes >= 1024 ** 2 ? `${(bytes / 1024 ** 2).toFixed(1)} MB` : `${Math.max(1, Math.round(bytes / 1024))} KB`
+
+export type VideoDetailProps = {
+  video: {
+    id: string
+    title: string
+    status: string
+    version: number
+    simulated: boolean
+    model: string
+    providerId: string
+    failedOverFrom: string | null
+    prompt: string
+    script: string | null
+    referenceAssets: VideoReferenceAsset[]
+    channel: string | null
+    aspectRatio: string
+    resolution: string
+    durationSeconds: number
+    audio: boolean
+    estimatedCostCents: number
+    actualCostCents: number | null
+    scoreDetail: ScoreDetail | null
+    mediaFacts: VideoMediaFacts | null
+    mediaCheck: { passed: boolean; findings: GuardrailFinding[] } | null
+    provenance: VideoProvenance | null
+    lastError: string | null
+    playbackUrl: string | null
+  }
+  profile: { tone: ToneAxis; passThreshold: number } | null
+  /** Present when this clip is sitting in the approvals queue. */
+  request: { id: string; chainName: string; stepName: string } | null
+  viewer: { canSubmit: boolean; canDecide: boolean; canGenerate: boolean }
+  blockReason: string | null
+}
+
+export function VideoDetail({ video, profile, request, viewer, blockReason }: VideoDetailProps) {
+  const router = useRouter()
+  const toast = useToast()
+  const [busy, setBusy] = React.useState(false)
+  const [rejecting, setRejecting] = React.useState(false)
+  const [comment, setComment] = React.useState('')
+
+  const blocking = video.mediaCheck?.findings.filter((f) => f.severity === 'high') ?? []
+  const advisory = video.mediaCheck?.findings.filter((f) => f.severity !== 'high') ?? []
+  const vertical = video.mediaFacts ? video.mediaFacts.height > video.mediaFacts.width : false
+
+  const run = async (fn: () => Promise<{ ok: boolean; message: string }>) => {
+    setBusy(true)
+    try {
+      const res = await fn()
+      toast.push({
+        tone: res.ok ? 'ok' : 'danger',
+        title: res.ok ? 'Done' : 'Not done',
+        body: res.message,
+      })
+      if (res.ok) router.refresh()
+      return res.ok
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  return (
+    <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_22rem]">
+      {/* ------------------------------------------------- the clip itself */}
+      <div className="min-w-0 space-y-4">
+        <Card className="overflow-hidden">
+          <div className="flex min-h-[16rem] items-center justify-center bg-black">
+            {video.playbackUrl ? (
+              <video
+                key={video.playbackUrl}
+                src={video.playbackUrl}
+                controls
+                playsInline
+                preload="metadata"
+                className={vertical ? 'max-h-[70vh] w-auto' : 'max-h-[70vh] w-full'}
+              />
+            ) : (
+              <p className="p-10 text-center text-sm text-ink-faint">
+                {video.status === 'dead_letter'
+                  ? (video.lastError ?? 'This generation failed and produced no clip.')
+                  : `Still ${video.status.replace('_', ' ')}.`}
+              </p>
+            )}
+          </div>
+        </Card>
+
+        {video.simulated && (
+          <p className="rounded-md bg-info-bg px-3 py-2 text-xs text-info-fg">
+            Simulated output. No provider generated this and nothing was billed — it exists so the whole
+            governed loop can be exercised end to end. It must never be presented as real footage.
+          </p>
+        )}
+
+        {video.failedOverFrom && (
+          <p className="rounded-md bg-warn-bg px-3 py-2 text-xs text-warn-fg">
+            Generated by {video.providerId} after {video.failedOverFrom} was unreachable. Provenance and cost
+            differ from the primary provider.
+          </p>
+        )}
+
+        <Card className="p-4">
+          <PanelHeading title="Brief" description="What was asked for, and what will be scored on a re-review" />
+          <div className="mt-3 space-y-3 text-sm">
+            <div>
+              <p className="text-2xs font-semibold uppercase tracking-wide text-ink-faint">Prompt</p>
+              <p className="mt-1 whitespace-pre-wrap text-ink-muted">{video.prompt}</p>
+            </div>
+            {video.script && (
+              <div className="border-t border-line pt-3">
+                <p className="text-2xs font-semibold uppercase tracking-wide text-ink-faint">Script</p>
+                <p className="mt-1 whitespace-pre-wrap text-ink-muted">{video.script}</p>
+              </div>
+            )}
+            {video.referenceAssets.length > 0 && (
+              <div className="border-t border-line pt-3">
+                <p className="text-2xs font-semibold uppercase tracking-wide text-ink-faint">Reference images</p>
+                <div className="mt-2 grid gap-2 sm:grid-cols-2">
+                  {video.referenceAssets.map((ref, index) => (
+                    <a
+                      key={`${ref.kind}-${index}`}
+                      href={ref.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="rounded-md border border-line p-2 text-xs text-ink-muted hover:border-ink-faint"
+                    >
+                      <span className="font-semibold capitalize text-ink">{ref.kind}</span>
+                      {ref.label ? <span> · {ref.label}</span> : null}
+                      {ref.instruction ? <span className="mt-1 block text-2xs">{ref.instruction}</span> : null}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </Card>
+
+        {video.scoreDetail && profile && (
+          <Card className="p-4">
+            <PanelHeading title="Copy guardrails" description="Scored before generating, against your brand profile and legal rules" />
+            <div className="mt-3">
+              <ScoreReport detail={video.scoreDetail} threshold={profile.passThreshold} toneTarget={profile.tone} />
+            </div>
+          </Card>
+        )}
+      </div>
+
+      {/* -------------------------------------------- facts, then decision */}
+      <aside className="space-y-4">
+        <Card className="space-y-3 p-4">
+          <PanelHeading title="Delivery checks" description="Measured from the file that actually arrived" />
+
+          {video.mediaCheck ? (
+            <>
+              <Badge tone={video.mediaCheck.passed ? 'ok' : 'danger'} dot>
+                {video.mediaCheck.passed ? 'Would be accepted' : 'Would be rejected at upload'}
+              </Badge>
+              {blocking.length > 0 && (
+                <ul className="space-y-1.5 rounded-md bg-danger-bg p-2.5 text-2xs text-danger-fg">
+                  {blocking.map((f) => (
+                    <li key={f.ruleId}>
+                      <span className="font-semibold">{f.ruleName}:</span> {f.message}
+                    </li>
+                  ))}
+                </ul>
+              )}
+              {advisory.length > 0 && (
+                <ul className="space-y-1.5 rounded-md bg-warn-bg p-2.5 text-2xs text-warn-fg">
+                  {advisory.map((f) => (
+                    <li key={f.ruleId}>
+                      <span className="font-semibold">{f.ruleName}:</span> {f.message}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </>
+          ) : (
+            <p className="text-xs text-ink-faint">Not measured yet.</p>
+          )}
+        </Card>
+
+        <Card className="p-4">
+          <PanelHeading title="Facts" />
+          <dl className="mt-3 space-y-1.5 text-xs">
+            <Row label="Version" value={`v${video.version}`} />
+            <Row label="Model" value={video.model} />
+            <Row label="Ordered" value={`${video.aspectRatio} · ${video.resolution} · ${video.durationSeconds}s`} />
+            {video.mediaFacts && (
+              <>
+                <Row
+                  label="Delivered"
+                  value={`${video.mediaFacts.width}×${video.mediaFacts.height} · ${video.mediaFacts.aspectRatio}`}
+                />
+                <Row
+                  label="Length"
+                  value={`${video.mediaFacts.durationSeconds.toFixed(1)}s · ${video.mediaFacts.frameRate.toFixed(0)}fps`}
+                />
+                <Row label="Audio" value={video.mediaFacts.hasAudio ? 'Yes' : 'Silent'} />
+                <Row label="Size" value={size(video.mediaFacts.byteSize)} />
+              </>
+            )}
+            <Row
+              label="Cost"
+              value={`${money(video.actualCostCents ?? video.estimatedCostCents)}${video.simulated ? ' (not billed)' : ''}`}
+            />
+          </dl>
+        </Card>
+
+        {video.provenance?.watermark && (
+          <Card className="p-4">
+            <PanelHeading title={`Provenance: ${video.provenance.watermark}`} description={video.provenance.visibleWatermark ? 'Visible watermark applied' : undefined} />
+            <p className="mt-2 text-2xs leading-relaxed text-ink-muted">
+              {video.provenance.note}
+            </p>
+            <p className="mt-2 text-2xs leading-relaxed text-ink-muted">
+              Platforms increasingly require AI-generated creative to be disclosed. That decision is yours —
+              this is the information it needs.
+            </p>
+          </Card>
+        )}
+
+        {/* --------------------------------------------------- the decision */}
+        <Card className="space-y-3 p-4">
+          {request && viewer.canDecide ? (
+            <>
+              <PanelHeading title="Your decision" description={`${request.chainName} — ${request.stepName}`} />
+              <p className="text-2xs leading-relaxed text-ink-muted">
+                The checks above are mechanical. Whether this footage is right for the brand is your
+                judgement, and nothing here has assessed it.
+              </p>
+
+              {rejecting ? (
+                <div className="space-y-2">
+                  <Field label="What needs to change?">
+                    <Textarea rows={3} value={comment} onChange={(e) => setComment(e.target.value)} />
+                  </Field>
+                  <div className="flex gap-2">
+                    <Button
+                      variant="danger"
+                      size="sm"
+                      className="flex-1"
+                      loading={busy}
+                      disabled={!comment.trim()}
+                      onClick={() =>
+                        run(() => decideAction(request.id, 'reject', comment, `/studio/video/${video.id}`))
+                      }
+                    >
+                      <X className="h-3.5 w-3.5" />
+                      Request changes
+                    </Button>
+                    <Button size="sm" onClick={() => setRejecting(false)}>
+                      Cancel
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <div className="flex gap-2">
+                  <Button
+                    variant="primary"
+                    size="sm"
+                    className="flex-1"
+                    loading={busy}
+                    disabled={!video.mediaCheck?.passed}
+                    onClick={() => run(() => decideAction(request.id, 'approve', undefined, `/studio/video/${video.id}`))}
+                  >
+                    <Check className="h-3.5 w-3.5" />
+                    Approve v{video.version}
+                  </Button>
+                  <Button size="sm" onClick={() => setRejecting(true)}>
+                    Changes
+                  </Button>
+                </div>
+              )}
+
+              {!video.mediaCheck?.passed && (
+                <p className="text-2xs text-danger-fg">
+                  Approval is disabled while the delivery checks fail — the platform would reject this clip at
+                  upload regardless of who signed it off.
+                </p>
+              )}
+
+              <p className="text-2xs text-ink-faint">
+                Approval binds to v{video.version}. Regenerating produces different footage and voids it.
+              </p>
+            </>
+          ) : request ? (
+            <>
+              <PanelHeading title="In review" description={`${request.chainName} — with ${request.stepName}`} />
+              <Badge tone="warn" dot>
+                Awaiting a decision
+              </Badge>
+            </>
+          ) : video.status === 'approved' ? (
+            <>
+              <PanelHeading title="Approved" description={`Signed off at v${video.version}`} />
+              <Badge tone="ok" dot>
+                Ready to use
+              </Badge>
+              <p className="text-2xs text-ink-faint">
+                Regenerating this clip voids the approval — the footage a reviewer saw would no longer exist.
+              </p>
+            </>
+          ) : video.status === 'dead_letter' ? (
+            <>
+              <PanelHeading title="Generation failed" />
+              <p className="text-2xs text-danger-fg">{video.lastError}</p>
+              {viewer.canGenerate && (
+                <Button size="sm" loading={busy} onClick={() => run(() => replayVideoAction(video.id))}>
+                  <RefreshCw className="h-3.5 w-3.5" />
+                  Try again
+                </Button>
+              )}
+            </>
+          ) : (
+            <>
+              <PanelHeading title="Send for review" description="Nothing publishes without approval" />
+              {blockReason ? (
+                <p className="flex items-start gap-1.5 rounded-md bg-warn-bg p-2.5 text-2xs text-warn-fg">
+                  <TriangleAlert className="mt-0.5 h-3.5 w-3.5 shrink-0" />
+                  {blockReason}
+                </p>
+              ) : null}
+              <Button
+                variant="primary"
+                size="sm"
+                className="w-full"
+                loading={busy}
+                disabled={!viewer.canSubmit || Boolean(blockReason)}
+                onClick={() => run(() => submitVideoForReviewAction(video.id))}
+              >
+                <Send className="h-3.5 w-3.5" />
+                Submit for review
+              </Button>
+              {!viewer.canSubmit && (
+                <p className="text-2xs text-ink-faint">Your role cannot submit work for review.</p>
+              )}
+            </>
+          )}
+        </Card>
+
+        <p className="flex items-start gap-1.5 text-2xs leading-relaxed text-ink-faint">
+          <ShieldCheck className="mt-0.5 h-3.5 w-3.5 shrink-0" />
+          Every step here — the request, the spend, the refusals, the decision — is written to the workspace
+          audit chain and cannot be edited afterwards.
+        </p>
+      </aside>
+    </div>
+  )
+}
+
+function PanelHeading({ title, description }: { title: React.ReactNode; description?: React.ReactNode }) {
+  return (
+    <div className="min-w-0">
+      <h2 className="text-sm font-semibold text-ink">{title}</h2>
+      {description && <p className="mt-0.5 text-[13px] leading-snug text-ink-muted">{description}</p>}
+    </div>
+  )
+}
+
+function Row({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="flex items-baseline justify-between gap-3">
+      <dt className="shrink-0 text-ink-faint">{label}</dt>
+      <dd className="truncate text-right tabular-nums text-ink-muted">{value}</dd>
+    </div>
+  )
+}
