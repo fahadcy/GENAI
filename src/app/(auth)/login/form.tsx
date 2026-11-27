@@ -27,7 +27,6 @@ export function LoginForm() {
           autoComplete="username"
           required
           placeholder="you@company.com"
-          defaultValue="fahad.ali@currieyoung.com"
         />
       </Field>
 
@@ -38,7 +37,6 @@ export function LoginForm() {
           autoComplete="current-password"
           required
           placeholder="••••••••••"
-          defaultValue="GenAI2026!"
         />
       </Field>
 
